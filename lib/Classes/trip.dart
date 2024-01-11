@@ -1,3 +1,9 @@
+/// # Trip class
+/// ## Contains trip and route
+/// 
+/// The trip class contains all the trip related data, including the list of attractions to visit.
+/// The route class is used in the trip class to store information about the planned visiting order.
+
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'dart:convert';
 import 'dart:typed_data';

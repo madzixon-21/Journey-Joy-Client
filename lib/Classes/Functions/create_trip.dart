@@ -1,3 +1,9 @@
+/// # Create trip action 
+/// ## Creates a new trip
+/// 
+/// Creates a request body with the trip name, description and photo. Encodes the photo to base64.
+/// Sends the POST request and returns a boolean indicating the success of the action.
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
@@ -39,7 +45,7 @@ class CreateTripAction{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(newTrip.toJson()),
+      body: jsonEncode(newTrip),
     );
 
     if (response.statusCode == 200) {

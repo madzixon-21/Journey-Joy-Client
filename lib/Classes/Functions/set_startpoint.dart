@@ -1,3 +1,8 @@
+/// # Set start point action
+/// 
+/// Sets the attraction with the corresponding attraction ID as the starting point in the planned route.
+/// Sends the PATCH request and returns the http response.
+
 import 'package:http/http.dart' as http;
 
 class SetStartPoint{

@@ -1,8 +1,11 @@
+/// # CheckboxHours
+/// ## Creates the checkbox widget for the personalized attraction form 
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
 
 class CheckboxHours extends StatefulWidget {
-  CheckboxHours({Key? key}) : super(key: key);
+  const CheckboxHours({Key? key}) : super(key: key);
 
   @override
   CheckboxHoursState createState() => CheckboxHoursState();
@@ -19,60 +22,60 @@ class CheckboxHoursState extends State<CheckboxHours> {
   final TextEditingController _saturdayController = TextEditingController();
   final TextEditingController _sundayController = TextEditingController();
 
-  bool isChecked_alwaysOpen = false;
-  bool isChecked_sameHours = false;
-  bool isChecked_diffHours = false;
+  bool isCheckedAlwaysOpen = false;
+  bool isCheckedSameHours = false;
+  bool isCheckedDiffHours = false;
 
-  List<List<String>> GetOpeningHours(){
-    List<List<String>> opening_hours = List.generate(7, (_) => List<String>.filled(2, ''));
+  List<List<String>> getOpeningHours(){
+    List<List<String>> openingHours = List.generate(7, (_) => List<String>.filled(2, ''));
 
-    if(isChecked_alwaysOpen){
+    if(isCheckedAlwaysOpen){
       
-      for (int i = 0; i < opening_hours.length; i++) {
-        for (int j = 0; j < opening_hours[i].length; j++) {
-          opening_hours[i][j] = '0000';
+      for (int i = 0; i < openingHours.length; i++) {
+        for (int j = 0; j < openingHours[i].length; j++) {
+          openingHours[i][j] = '0000';
         }
       }
 
-    }else if( isChecked_sameHours){
-      var hours = GetHours(_sameHoursController.text);
+    }else if( isCheckedSameHours){
+      var hours = getHours(_sameHoursController.text);
 
-      for (int i = 0; i < opening_hours.length; i++) {
-        opening_hours[i][0] = hours[0];
-        opening_hours[i][1] = hours[1];
+      for (int i = 0; i < openingHours.length; i++) {
+        openingHours[i][0] = hours[0];
+        openingHours[i][1] = hours[1];
       }
 
     }else{
-      var mon = GetHours(_mondayController.text);
-      opening_hours[0][0] = mon[0];
-      opening_hours[0][1] = mon[1];
+      var mon = getHours(_mondayController.text);
+      openingHours[0][0] = mon[0];
+      openingHours[0][1] = mon[1];
 
-      var tue = GetHours(_tuesdayController.text);
-      opening_hours[1][0] = tue[0];
-      opening_hours[1][1] = tue[1];
+      var tue = getHours(_tuesdayController.text);
+      openingHours[1][0] = tue[0];
+      openingHours[1][1] = tue[1];
 
-      var wed = GetHours(_wednesdayController.text);
-      opening_hours[2][0] = wed[0];
-      opening_hours[2][1] = wed[1];
+      var wed = getHours(_wednesdayController.text);
+      openingHours[2][0] = wed[0];
+      openingHours[2][1] = wed[1];
 
-      var thu = GetHours(_thursdayController.text);
-      opening_hours[3][0] = thu[0];
-      opening_hours[3][1] = thu[1];
+      var thu = getHours(_thursdayController.text);
+      openingHours[3][0] = thu[0];
+      openingHours[3][1] = thu[1];
 
-      var fri = GetHours(_fridayController.text);
-      opening_hours[4][0] = fri[0];
-      opening_hours[4][1] = fri[1];
+      var fri = getHours(_fridayController.text);
+      openingHours[4][0] = fri[0];
+      openingHours[4][1] = fri[1];
 
-      var sat = GetHours(_saturdayController.text);
-      opening_hours[5][0] = sat[0];
-      opening_hours[6][1] = sat[1];
+      var sat = getHours(_saturdayController.text);
+      openingHours[5][0] = sat[0];
+      openingHours[6][1] = sat[1];
 
-      var sun = GetHours(_sundayController.text);
-      opening_hours[7][0] = sun[0];
-      opening_hours[7][1] = sun[1];
+      var sun = getHours(_sundayController.text);
+      openingHours[7][0] = sun[0];
+      openingHours[7][1] = sun[1];
     }
 
-    return opening_hours;
+    return openingHours;
   }
 
   @override
@@ -83,14 +86,14 @@ class CheckboxHoursState extends State<CheckboxHours> {
         Row(
           children: [
             Checkbox(
-              value: isChecked_alwaysOpen,
+              value: isCheckedAlwaysOpen,
               checkColor: Colors.grey.shade900,
               activeColor: Colors.transparent,
               onChanged: (value){
                 setState(() {
-                  isChecked_alwaysOpen = value ?? false;
-                  isChecked_diffHours = false;
-                  isChecked_sameHours = false;
+                  isCheckedAlwaysOpen = value ?? false;
+                  isCheckedDiffHours = false;
+                  isCheckedSameHours = false;
                 });
               }
             ),
@@ -111,14 +114,14 @@ class CheckboxHoursState extends State<CheckboxHours> {
         Row(
           children: [
             Checkbox(
-              value: isChecked_sameHours,
+              value: isCheckedSameHours,
               checkColor: Colors.grey.shade900,
               activeColor: Colors.transparent,
               onChanged: (value){
                 setState(() {
-                  isChecked_sameHours = value ?? false;
-                  isChecked_alwaysOpen = false;
-                  isChecked_diffHours = false;
+                  isCheckedSameHours = value ?? false;
+                  isCheckedAlwaysOpen = false;
+                  isCheckedDiffHours = false;
                 });
               },
             ),
@@ -137,7 +140,7 @@ class CheckboxHoursState extends State<CheckboxHours> {
         ),
 
         Visibility(
-          visible: isChecked_sameHours,
+          visible: isCheckedSameHours,
           child: FormTileSmall(
             label: 'Set opening hours:',
             description: '00:00 - 00:00',
@@ -150,14 +153,14 @@ class CheckboxHoursState extends State<CheckboxHours> {
         Row(
           children: [
             Checkbox(
-              value: isChecked_diffHours,
+              value: isCheckedDiffHours,
               checkColor: Colors.grey.shade900,
               activeColor: Colors.transparent,
               onChanged: (value){
                 setState(() {
-                  isChecked_diffHours = value ?? false;
-                  isChecked_alwaysOpen = false;
-                  isChecked_sameHours = false;
+                  isCheckedDiffHours = value ?? false;
+                  isCheckedAlwaysOpen = false;
+                  isCheckedSameHours = false;
                 });
               },
             ),
@@ -174,7 +177,7 @@ class CheckboxHoursState extends State<CheckboxHours> {
         ),
 
         Visibility(
-            visible: isChecked_diffHours,
+            visible: isCheckedDiffHours,
             child: Column(
               children: [
                 FormTileSmall(
@@ -228,7 +231,7 @@ class CheckboxHoursState extends State<CheckboxHours> {
   }
 }
 
-List<String> GetHours(String input) {
+List<String> getHours(String input) {
   String numericString = input.replaceAll(RegExp(r'[^0-9]'), '');
 
   String part1 = numericString.substring(0, 4);

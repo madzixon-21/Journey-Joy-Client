@@ -1,8 +1,8 @@
-/// # Adds an attraction to the trip with the corresponding tripId
+/// # Add attraction action 
+/// ## Adds an attraction to the trip with the corresponding tripId
 /// 
-/// Creates a request with the required data and encodes the attraction photo to base64.
-/// Sends the POST request and return a bool
-
+/// Creates a request body with the required data and encodes the attraction photo to base64.
+/// Sends the POST request and returns a boolean indicating the succes of the action.
 
 import 'package:http/http.dart' as http;
 import 'package:journey_joy_client/Classes/attraction.dart';
@@ -17,11 +17,11 @@ class AddAttractionRequest{
   final String timeNeeded;
   final Address address;
   final String attractionId;
-  final List<List<String>> opening_hours;
+  final List<List<String>> openingHours;
   final List<String> prices;
   late AttractionToAdd attraction;
 
-  AddAttractionRequest( this.name, this.address, this.description, this.imageBytes, this.timeNeeded, this.opening_hours, this.prices, this.attractionId){ 
+  AddAttractionRequest( this.name, this.address, this.description, this.imageBytes, this.timeNeeded, this.openingHours, this.prices, this.attractionId){ 
     if (imageBytes != null) {
       base64Picture = base64Encode(Uint8List.fromList(imageBytes!));
     }
@@ -36,20 +36,19 @@ class AddAttractionRequest{
       location: address,
       tripAdvisorLocationId: attractionId,
       locationType: 0,
-      openHours: opening_hours,
+      openHours: openingHours,
       prices: prices,
       timeNeeded: int.parse(timeNeeded),
       isStartPoint: false,
     );
   }
-
-  
 }
 
 class AddAttractionAction{
-  Future<bool> add(name, address, description, photo, timeNeeded, opening_hours, prices,  attractionId, tripId, token) async {
+  
+  Future<bool> add(name, address, description, photo, timeNeeded, openingHours, prices,  attractionId, tripId, token) async {
 
-    AddAttractionRequest request = AddAttractionRequest(name, address, description, photo, timeNeeded, opening_hours, prices, attractionId);
+    AddAttractionRequest request = AddAttractionRequest(name, address, description, photo, timeNeeded, openingHours, prices, attractionId);
 
     final response = await http.post(
       Uri.parse('https://journeyjoy-app.azurewebsites.net/trips/$tripId'), 

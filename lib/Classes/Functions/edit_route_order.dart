@@ -1,24 +1,15 @@
+/// # Edit route action
+/// ## Edits the order of attractions in the trip
+/// 
+/// Sends a POST request where the request body is a new two-dimensional list of attractions IDs in the 
+/// desired order. Returns the http response.
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-// class EditRouteRequest {
-//   final List<List<String>> attractionsInOrder;
-
-//   EditRouteRequest(this.attractionsInOrder);
-
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'attractionsInOrder': attractionsInOrder.map((attractions) => attractions.map((id) => id).toList()).toList(),
-//     };
-//   }
-  
-// }
-
 
 class EditRouteAction{
   Future<http.Response?> edit(List<List<String>> attractionsInOrder, String tripId, String token) async {
     
-    //final EditRouteRequest request = EditRouteRequest(attractionsInOrder);
     final response = await http.post(
       Uri.parse('https://journeyjoy-app.azurewebsites.net/trips/editRoute/$tripId'), 
       headers: <String, String>{
@@ -27,7 +18,6 @@ class EditRouteAction{
       },
       body: jsonEncode(attractionsInOrder),
     );
-    print(jsonEncode(attractionsInOrder));
 
     return response;
   }

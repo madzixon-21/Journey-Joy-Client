@@ -1,3 +1,8 @@
+/// # Sign in action
+/// 
+/// Creates a request body with the new user's nickname, password and email and sends the POST request.
+/// Returns the http response.
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -26,7 +31,7 @@ class SignInAction{
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(newUser.toJson()),
+      body: jsonEncode(newUser),
     );
 
     return response;

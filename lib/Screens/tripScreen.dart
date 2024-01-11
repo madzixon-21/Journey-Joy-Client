@@ -256,7 +256,7 @@ Widget buildRouteList(Trip trip) {
 
       ElevatedButton(
         onPressed: () {
-          RemoveRoute().delete(widget.tripId, widget.token).then((http.Response? response){
+          RemoveRouteAction().delete(widget.tripId, widget.token).then((http.Response? response){
             if(response != null){
               if(response.statusCode == 200){
                 setState(() {

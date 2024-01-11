@@ -1,3 +1,11 @@
+/// # Trip cubit
+/// ## Cubit for fetching trips for the user
+/// 
+/// Includes three states: TripssData, TripssLoading, TripsError.
+/// TripsData: contains the fetched list of trips.
+/// TripsLoading: is used for displaying a circular progress indicator.
+/// TripsError: contains an error message.
+
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_joy_client/Classes/trip.dart';
@@ -18,7 +26,6 @@ class TripsCubit extends Cubit<TripsState>{
               'Content-Type': 'application/json',
             },
           );
-          print(token);
           if (response.statusCode == 200) {
             if(response.body.isNotEmpty){
               final List<Trip> tripsList = (json.decode(response.body) as List)
@@ -37,7 +44,6 @@ class TripsCubit extends Cubit<TripsState>{
           }
         } catch (error) {
           emit(TripsError(message: 'Failed to fetch trips: $error'));
-          print(error);
         }
       }
 

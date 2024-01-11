@@ -1,3 +1,8 @@
+/// # Log in action
+/// ## Sends the POST request to log in
+/// 
+/// Creates a request body with the email and password and sends the POST request.
+/// Returns the http response.
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -24,10 +29,9 @@ class LoginAction {
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(user.toJson()),
+      body: jsonEncode(user),
     );
 
     return response;
-
   }
 }

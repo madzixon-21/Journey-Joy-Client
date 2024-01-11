@@ -310,7 +310,7 @@ class FormDialog extends StatelessWidget {
                       longitude: 0);
 
                       List<String> prices = pricesKey.currentState?.GetPrices() ?? [];
-                      List<List<String>> opening_hours = hoursKey.currentState?.GetOpeningHours() ?? [];
+                      List<List<String>> opening_hours = hoursKey.currentState?.getOpeningHours() ?? [];
 
                       AddAttractionAction().add(
                         _attractionNameController.text,

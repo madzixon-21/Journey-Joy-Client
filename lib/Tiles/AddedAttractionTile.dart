@@ -152,7 +152,7 @@ class MinusButton extends StatelessWidget {
                               ),
                           TextButton(
                             onPressed: () {
-                              DeleteAttraction().delete(tripId, attraction.tripAdvisorLocationId, token).then((http.Response? response){
+                              DeleteAttractionAction().delete(tripId, attraction.tripAdvisorLocationId, token).then((http.Response? response){
                                 if (response != null) {
                                   if(response.statusCode == 200)
                                   {

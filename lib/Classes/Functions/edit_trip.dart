@@ -1,7 +1,11 @@
+/// # Edit trip action
+/// 
+/// Creates a request body with the new desired data and encodes the trip photo to base64.
+/// Sends the POST request and returns a boolean indicating the succes of the action.
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
-
 
 class EditTripRequest {
   final String name;
@@ -39,7 +43,7 @@ class EditTripAction{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(editedTrip.toJson()),
+      body: jsonEncode(editedTrip),
     );
 
     if (response.statusCode == 200) {

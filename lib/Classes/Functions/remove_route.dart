@@ -1,6 +1,10 @@
+/// # Remove route action
+/// 
+/// Removes the planned route from the trip with the corresponding id.
+
 import 'package:http/http.dart' as http;
 
-class RemoveRoute{
+class RemoveRouteAction{
   Future<http.Response?> delete(tripId, token) async {
 
     final response = await http.delete(

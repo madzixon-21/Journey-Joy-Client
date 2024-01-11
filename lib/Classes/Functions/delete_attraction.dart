@@ -1,6 +1,11 @@
+/// # Delete attraction action
+/// 
+/// Deletes the attraction with the corresponding attractionId from the trip with tripId.
+/// Returns th http response.
+
 import 'package:http/http.dart' as http;
 
-class DeleteAttraction{
+class DeleteAttractionAction{
   Future<http.Response?> delete(tripId, attractionId, token) async {
 
     final response = await http.delete(

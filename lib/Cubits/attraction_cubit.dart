@@ -1,3 +1,11 @@
+/// # Attraction cubit
+/// ## Cubit for fetching attractions from tripAdvisor
+/// 
+/// Includes three states: AttractionsData, AttractionsLoading, AttractionsError.
+/// AttractionsData: contains the fetched lis of attractions.
+/// AttractionsLoading: is used for displaying a circular progress indicator.
+/// AttractionsError: contains an error message.
+
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
@@ -12,7 +20,6 @@ class AttractionsCubit extends Cubit<AttractionsState>{
     emit(AttractionsLoading());
     try {
       if(name.isNotEmpty){
-        print(token);
         final response = await http.get(
           Uri.parse('https://journeyjoy-app.azurewebsites.net/trips/attractions?name=$name'),
             headers: <String, String>{
@@ -36,8 +43,7 @@ class AttractionsCubit extends Cubit<AttractionsState>{
         
       }else{
           final List<Attraction> emptyList = List.empty();
-          emit(AttractionsData(attractions: emptyList));
-        
+          emit(AttractionsData(attractions: emptyList)); 
       }
     } catch (e) {
       emit(AttractionsError(message: 'An error occurred while fetching attractions'));
