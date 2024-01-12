@@ -38,9 +38,8 @@ class CheckboxHoursState extends State<CheckboxHours> {
     if(isCheckedAlwaysOpen){
       
       for (int i = 0; i < openingHours.length; i++) {
-        for (int j = 0; j < openingHours[i].length; j++) {
-          openingHours[i][j] = '0000';
-        }
+        openingHours[i][0] = '0000';
+        openingHours[i][1] = '2400';
       }
 
     }else if( isCheckedSameHours){

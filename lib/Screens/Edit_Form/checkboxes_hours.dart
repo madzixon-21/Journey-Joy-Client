@@ -51,9 +51,8 @@ class EditCheckboxHoursState extends State<EditCheckboxHours> {
     if(isCheckedAlwaysOpen){
       
       for (int i = 0; i < mutableOpeningHours.length; i++) {
-        for (int j = 0; j < mutableOpeningHours[i].length; j++) {
-          mutableOpeningHours[i][j] = '0000';
-        }
+        mutableOpeningHours[i][0] = '0000';
+        mutableOpeningHours[i][1] = '2400';
       }
 
     }else if( isCheckedSameHours){
@@ -101,13 +100,13 @@ class EditCheckboxHoursState extends State<EditCheckboxHours> {
   Widget build(BuildContext context) {
 
     if(widget.openingHours.isEmpty){
-      _mondayController.text = "00:00 - 00:00";
-      _tuesdayController.text = "00:00 - 00:00";
-      _wednesdayController.text = "00:00 - 00:00";
-      _thursdayController.text = "00:00 - 00:00";
-      _fridayController.text = "00:00 - 00:00";
-      _saturdayController.text = "00:00 - 00:00";
-      _sundayController.text = "00:00 - 00:00";
+      _mondayController.text = "00:00 - 24:00";
+      _tuesdayController.text = "00:00 - 24:00";
+      _wednesdayController.text = "00:00 - 24:00";
+      _thursdayController.text = "00:00 - 24:00";
+      _fridayController.text = "00:00 - 24:00";
+      _saturdayController.text = "00:00 - 24:00";
+      _sundayController.text = "00:00 - 24:00";
     }else{
       _mondayController.text = getHoursString(widget.openingHours[0]);
       _tuesdayController.text = getHoursString(widget.openingHours[1]);
