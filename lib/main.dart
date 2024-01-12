@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'Screens/catalog_screen.dart';
 export 'package:go_router/go_router.dart';
 import 'Screens/attraction_screen.dart';
-import 'Screens/Add Form/form.dart';
+import 'Screens/Add_Form/form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Cubits/attraction_cubit.dart';
 

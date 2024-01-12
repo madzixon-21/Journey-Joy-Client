@@ -1,31 +1,33 @@
-/// # Form
-/// ## Form screen used for collecting data about a personalized attraction.
+/// # Edit Form
+/// ## Form screen used for editing a personalized attraction that has been added to a trip.
 /// 
 /// Contains text fields for collecting attraction details and location data.
-/// Uses checkBoxPrices and chackBoxHours for collecting information about opening hours and prices.
+/// Uses editCheckBoxPrices and editCheckBoxHours for collecting information about opening hours and prices.
 
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Tiles/FormTile.dart';
-import 'package:journey_joy_client/Screens/Add%20Form/checkboxes_hours.dart';
-import 'package:journey_joy_client/Screens/Add%20Form/checkboxes_prices.dart';
+import 'package:journey_joy_client/Screens/Edit_Form/checkboxes_hours.dart';
+import 'package:journey_joy_client/Screens/Edit_Form/checkboxes_prices.dart';
 import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
-import 'package:journey_joy_client/Classes/Functions/add_attraction.dart';
+import 'package:journey_joy_client/Classes/Functions/edit_attraction.dart';
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
 
-class Form extends StatefulWidget {
+class EditForm extends StatefulWidget {
 
+  final AttractionToAdd attraction;
   final String token;
   final String tripId;
  
-  const Form({required this.token, required this.tripId, super.key});
+  const EditForm({required this.attraction, required this.token, required this.tripId, super.key});
 
-  @override
-  FormState createState() => FormState();
+@override
+  EditFormState createState() => EditFormState();
 }
 
-class FormState extends State<Form> {
+class EditFormState extends State<EditForm> {
+
   final TextEditingController _attractionNameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
@@ -49,11 +51,22 @@ class FormState extends State<Form> {
     }
   }
 
- final GlobalKey<CheckboxPricesState> pricesKey = GlobalKey<CheckboxPricesState>();
- final GlobalKey<CheckboxHoursState> hoursKey = GlobalKey<CheckboxHoursState>();
+ final GlobalKey<EditCheckboxPricesState> pricesKey = GlobalKey<EditCheckboxPricesState>();
+ final GlobalKey<EditCheckboxHoursState> hoursKey = GlobalKey<EditCheckboxHoursState>();
 
   @override
   Widget build(BuildContext context) {
+    _attractionNameController.text = widget.attraction.name;
+    _descriptionController.text = widget.attraction.description;
+    _timeController.text = widget.attraction.timeNeeded.toString();
+    _street1Controller.text = widget.attraction.location.street1;
+    _cityController.text = widget.attraction.location.city;
+    _stateController.text = widget.attraction.location.state;
+    _countryController.text = widget.attraction.location.country;
+    _postalCodeController.text = widget.attraction.location.postalcode;
+    _addressController.text = widget.attraction.location.address;
+    _phoneController.text = widget.attraction.location.phone;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 219, 235, 199),
@@ -77,7 +90,7 @@ class FormState extends State<Form> {
 
               SizedBox(
                 width: 300, 
-                child: Text('Attraction details',
+                child: Text('Edit attraction ${widget.attraction.name}',
                   style: TextStyle(
                     color: Colors.grey.shade900,
                     fontFamily: 'Lohit Tamil',
@@ -273,7 +286,7 @@ class FormState extends State<Form> {
                   ),
                   borderRadius: BorderRadius.circular(20.0), 
                 ),
-                child: CheckboxHours( key: hoursKey)),
+                child: EditCheckboxHours(openingHours: widget.attraction.openHours, key: hoursKey)),
 
               const SizedBox(height: 25),
 
@@ -300,7 +313,7 @@ class FormState extends State<Form> {
                   ),
                   borderRadius: BorderRadius.circular(20.0), 
                 ),
-                child: CheckboxPrices( key: pricesKey)),
+                child: EditCheckboxPrices(prices: widget.attraction.prices, key: pricesKey)),
 
               const SizedBox(height: 20),
 
@@ -321,7 +334,7 @@ class FormState extends State<Form> {
                       List<String> prices = pricesKey.currentState?.getPrices() ?? [];
                       List<List<String>> openingHours = hoursKey.currentState?.getOpeningHours() ?? [];
 
-                      AddAttractionAction().add(
+                      EditAttractionAction().edit(
                         _attractionNameController.text,
                         ad,
                         _descriptionController.text,
@@ -338,7 +351,7 @@ class FormState extends State<Form> {
                         } else {
                           showDialog<String>(
                             context: context,
-                            builder: (BuildContext context) => const ErrorDialog(prop: "We couldn't add the attraction to your trip."),
+                            builder: (BuildContext context) => const ErrorDialog(prop: "We couldn't edit the attraction"),
                           );
                         }
                       });

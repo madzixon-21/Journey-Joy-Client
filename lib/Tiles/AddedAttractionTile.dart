@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
 import 'dart:convert';
 import 'package:journey_joy_client/Classes/Functions/set_startpoint.dart';
-import 'package:journey_joy_client/Screens/Edit%20Form%20/edit_form.dart';
+import 'package:journey_joy_client/Screens/Edit_Form/edit_form.dart';
 
 class AddedAttractionTile extends StatelessWidget {
   const AddedAttractionTile({
