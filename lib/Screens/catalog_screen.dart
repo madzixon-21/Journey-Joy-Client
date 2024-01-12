@@ -6,16 +6,16 @@ import 'package:journey_joy_client/Dialogs/new_trip_dialog.dart';
 import 'package:journey_joy_client/Dialogs/edit_trip_dialog.dart';
 import 'package:go_router/go_router.dart';
 
-class catalogScreen extends StatefulWidget {
+class CatalogScreen extends StatefulWidget {
   final String token;
 
-  catalogScreen({Key? key, required this.token}) : super(key: key);
+  const CatalogScreen({Key? key, required this.token}) : super(key: key);
 
   @override
-  catalogScreenState createState() => catalogScreenState();
+  CatalogScreenState createState() => CatalogScreenState();
 }
 
-class catalogScreenState extends State<catalogScreen> {
+class CatalogScreenState extends State<CatalogScreen> {
 
   @override
   void initState() {

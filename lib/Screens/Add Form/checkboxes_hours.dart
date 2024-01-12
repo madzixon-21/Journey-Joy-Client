@@ -1,15 +1,23 @@
+/// # CheckboxHours
+/// ## Creates the checkbox widget for the personalized attraction form and collects information about opening hours
+/// 
+/// Creates three checkboxes for three opening hours options: Always open, same opening hours every day
+/// and different opening hours every day. 
+/// When "Always open" is checked, the getOpeningHours returns 0000 for every opening and closing hour.
+/// When "Same hours every day" is checked, a new textField appears to collect information about the opening hours.
+/// When "Different hours every day" is checked, seven textFields appear to specify the opening hours each day of the week.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
 
-class EditCheckboxHours extends StatefulWidget {
-  List<List<String>> opening_hours;
-  EditCheckboxHours({required this.opening_hours, Key? key}) : super(key: key);
+class CheckboxHours extends StatefulWidget {
+  const CheckboxHours({Key? key}) : super(key: key);
 
   @override
-  EditCheckboxHoursState createState() => EditCheckboxHoursState();
+  CheckboxHoursState createState() => CheckboxHoursState();
 }
 
-class EditCheckboxHoursState extends State<EditCheckboxHours> {
+class CheckboxHoursState extends State<CheckboxHours> {
 
   final TextEditingController _sameHoursController = TextEditingController();
   final TextEditingController _mondayController = TextEditingController();
@@ -20,112 +28,78 @@ class EditCheckboxHoursState extends State<EditCheckboxHours> {
   final TextEditingController _saturdayController = TextEditingController();
   final TextEditingController _sundayController = TextEditingController();
 
-  bool isChecked_alwaysOpen = false;
-  bool isChecked_sameHours = false;
-  bool isChecked_diffHours = true;
+  bool isCheckedAlwaysOpen = true;
+  bool isCheckedSameHours = false;
+  bool isCheckedDiffHours = false;
 
-  @override
-  void initState() {
-    super.initState();
+  List<List<String>> getOpeningHours(){
+    List<List<String>> openingHours = List.generate(7, (_) => List<String>.filled(2, ''));
 
-    setState(() {
-      isChecked_diffHours = true;
-      isChecked_alwaysOpen = false;
-      isChecked_sameHours = false;
-    });
-  }
-
-  List<List<String>> GetOpeningHours(){
-
-    if(widget.opening_hours.isEmpty){
-          widget.opening_hours = List.generate(7, (_) => List<String>.filled(2, ''));
-
-    }
-
-    if(isChecked_alwaysOpen){
+    if(isCheckedAlwaysOpen){
       
-      for (int i = 0; i < widget.opening_hours.length; i++) {
-        for (int j = 0; j < widget.opening_hours[i].length; j++) {
-          widget.opening_hours[i][j] = '1';
+      for (int i = 0; i < openingHours.length; i++) {
+        for (int j = 0; j < openingHours[i].length; j++) {
+          openingHours[i][j] = '0000';
         }
       }
 
-    }else if( isChecked_sameHours){
-      var hours = GetHours(_sameHoursController.text);
+    }else if( isCheckedSameHours){
+      var hours = getHours(_sameHoursController.text);
 
-      for (int i = 0; i < widget.opening_hours.length; i++) {
-        widget.opening_hours[i][0] = hours[0];
-        widget.opening_hours[i][1] = hours[1];
+      for (int i = 0; i < openingHours.length; i++) {
+        openingHours[i][0] = hours[0];
+        openingHours[i][1] = hours[1];
       }
 
     }else{
-      var mon = GetHours(_mondayController.text);
-      widget.opening_hours[0][0] = mon[0];
-      widget.opening_hours[0][1] = mon[1];
+      var mon = getHours(_mondayController.text);
+      openingHours[0][0] = mon[0];
+      openingHours[0][1] = mon[1];
 
-      var tue = GetHours(_tuesdayController.text);
-      widget.opening_hours[1][0] = tue[0];
-      widget.opening_hours[1][1] = tue[1];
+      var tue = getHours(_tuesdayController.text);
+      openingHours[1][0] = tue[0];
+      openingHours[1][1] = tue[1];
 
-      var wed = GetHours(_wednesdayController.text);
-      widget.opening_hours[2][0] = wed[0];
-      widget.opening_hours[2][1] = wed[1];
+      var wed = getHours(_wednesdayController.text);
+      openingHours[2][0] = wed[0];
+      openingHours[2][1] = wed[1];
 
-      var thu = GetHours(_thursdayController.text);
-      widget.opening_hours[3][0] = thu[0];
-      widget.opening_hours[3][1] = thu[1];
+      var thu = getHours(_thursdayController.text);
+      openingHours[3][0] = thu[0];
+      openingHours[3][1] = thu[1];
 
-      var fri = GetHours(_fridayController.text);
-      widget.opening_hours[4][0] = fri[0];
-      widget.opening_hours[4][1] = fri[1];
+      var fri = getHours(_fridayController.text);
+      openingHours[4][0] = fri[0];
+      openingHours[4][1] = fri[1];
 
-      var sat = GetHours(_saturdayController.text);
-      widget.opening_hours[5][0] = sat[0];
-      widget.opening_hours[5][1] = sat[1];
+      var sat = getHours(_saturdayController.text);
+      openingHours[5][0] = sat[0];
+      openingHours[5][1] = sat[1];
 
-      var sun = GetHours(_sundayController.text);
-      widget.opening_hours[6][0] = sun[0];
-      widget.opening_hours[6][1] = sun[1];
+      var sun = getHours(_sundayController.text);
+      openingHours[6][0] = sun[0];
+      openingHours[6][1] = sun[1];
     }
 
-    return widget.opening_hours;
+    return openingHours;
   }
 
   @override
   Widget build(BuildContext context) {
-
-    if(widget.opening_hours.isEmpty){
-      _mondayController.text = "00:00 - 00:00";
-      _tuesdayController.text = "00:00 - 00:00";
-      _wednesdayController.text = "00:00 - 00:00";
-      _thursdayController.text = "00:00 - 00:00";
-      _fridayController.text = "00:00 - 00:00";
-      _saturdayController.text = "00:00 - 00:00";
-      _sundayController.text = "00:00 - 00:00";
-    }else{
-      _mondayController.text = getHoursString(widget.opening_hours[0]);
-      _tuesdayController.text = getHoursString(widget.opening_hours[1]);
-      _wednesdayController.text = getHoursString(widget.opening_hours[2]);
-      _thursdayController.text = getHoursString(widget.opening_hours[3]);
-      _fridayController.text = getHoursString(widget.opening_hours[4]);
-      _saturdayController.text = getHoursString(widget.opening_hours[5]);
-      _sundayController.text = getHoursString(widget.opening_hours[6]);
-    }
-
     return Column(
       children: [
 
         Row(
           children: [
             Checkbox(
-              value: isChecked_alwaysOpen,
+              value: isCheckedAlwaysOpen,
               checkColor: Colors.grey.shade900,
               activeColor: Colors.transparent,
               onChanged: (value){
                 setState(() {
-                  isChecked_alwaysOpen = value ?? false;
-                  isChecked_diffHours = false;
-                  isChecked_sameHours = false;
+                  isCheckedAlwaysOpen = value ?? false;
+                  isCheckedDiffHours = false;
+                  isCheckedSameHours = false;
                 });
               }
             ),
@@ -146,20 +120,18 @@ class EditCheckboxHoursState extends State<EditCheckboxHours> {
         Row(
           children: [
             Checkbox(
-              value: isChecked_sameHours,
+              value: isCheckedSameHours,
               checkColor: Colors.grey.shade900,
               activeColor: Colors.transparent,
               onChanged: (value){
                 setState(() {
-                  isChecked_sameHours = value ?? false;
-                  isChecked_alwaysOpen = false;
-                  isChecked_diffHours = false;
+                  isCheckedSameHours = value ?? false;
+                  isCheckedAlwaysOpen = false;
+                  isCheckedDiffHours = false;
                 });
               },
             ),
-
             const SizedBox(width: 8), 
-
             Text(
               'Same opening hours everyday',
               style: TextStyle(
@@ -172,7 +144,7 @@ class EditCheckboxHoursState extends State<EditCheckboxHours> {
         ),
 
         Visibility(
-          visible: isChecked_sameHours,
+          visible: isCheckedSameHours,
           child: FormTileSmall(
             label: 'Set opening hours:',
             description: '00:00 - 00:00',
@@ -185,14 +157,14 @@ class EditCheckboxHoursState extends State<EditCheckboxHours> {
         Row(
           children: [
             Checkbox(
-              value: isChecked_diffHours,
+              value: isCheckedDiffHours,
               checkColor: Colors.grey.shade900,
               activeColor: Colors.transparent,
               onChanged: (value){
                 setState(() {
-                  isChecked_diffHours = value ?? false;
-                  isChecked_alwaysOpen = false;
-                  isChecked_sameHours = false;
+                  isCheckedDiffHours = value ?? false;
+                  isCheckedAlwaysOpen = false;
+                  isCheckedSameHours = false;
                 });
               },
             ),
@@ -209,7 +181,7 @@ class EditCheckboxHoursState extends State<EditCheckboxHours> {
         ),
 
         Visibility(
-            visible: isChecked_diffHours,
+            visible: isCheckedDiffHours,
             child: Column(
               children: [
                 FormTileSmall(
@@ -263,7 +235,7 @@ class EditCheckboxHoursState extends State<EditCheckboxHours> {
   }
 }
 
-List<String> GetHours(String input) {
+List<String> getHours(String input) {
   String numericString = input.replaceAll(RegExp(r'[^0-9]'), '');
 
   String part1 = numericString.substring(0, 4);
@@ -271,21 +243,3 @@ List<String> GetHours(String input) {
 
   return [part1, part2];
 }
-
-String getHoursString(List<String> openingHours) {
-
-    if(openingHours.isEmpty){
-      return "00:00 - 00:00";
-    }
-    else{
-    String openingHour = openingHours[0];
-    String closingHour = openingHours[1];
-
-    String openingHourString = openingHour.substring(0, 2);
-    String openingMinuteString = openingHour.substring(2, 4);
-    String closingHourString = closingHour.substring(0, 2);
-    String closingMinuteString = closingHour.substring(2, 4);
-
-    return "$openingHourString:$openingMinuteString - $closingHourString:$closingMinuteString";
-    }
-  }

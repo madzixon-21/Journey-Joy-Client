@@ -1,3 +1,9 @@
+///# Attraction Screen
+///## Screen for displaying attraction from tripAdvisor after making a search.
+///
+/// Screen consisting of a Scaffold with an appbar and body. The appar contains a search bar where the user can search 
+/// attractions using key words. The body displays a list of attraction 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_joy_client/Cubits/attraction_cubit.dart';
@@ -5,16 +11,16 @@ import 'package:journey_joy_client/Tiles/AttractionTile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:journey_joy_client/Cubits/trip_cubit.dart';
 
-class attractionScreen extends StatefulWidget {
+class AttractionScreen extends StatefulWidget {
 
    final String token;
   final String tripId;
-  const attractionScreen({required this.token, required this.tripId, super.key});
+  const AttractionScreen({required this.token, required this.tripId, super.key});
 @override
-  attractionScreenState createState() => attractionScreenState();
+  AttractionScreenState createState() => AttractionScreenState();
 }
 
-class attractionScreenState extends State<attractionScreen> {
+class AttractionScreenState extends State<AttractionScreen> {
 
 
   final TextEditingController _searchController = TextEditingController();
@@ -63,7 +69,6 @@ class attractionScreenState extends State<attractionScreen> {
                 prefixIcon: IconButton(
                   icon: const Icon(Icons.search, color: Colors.black,),
                   onPressed: () {context.read<AttractionsCubit>().fetch(_searchController.text, widget.token);},
-                  
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
@@ -110,13 +115,12 @@ class attractionScreenState extends State<attractionScreen> {
                     ),
                   );
                 }
+
                 return ListView.builder(
                   itemCount: attractions.length,
                   itemBuilder: (_, i) {
                     final attraction = attractions[i];
-
                     return AttractionTile(attraction: attraction, tripId: widget.tripId, token: widget.token);
-                    
                   },
                 );
               case AttractionsError:
@@ -144,7 +148,7 @@ class attractionScreenState extends State<attractionScreen> {
                 size: 32,
               ),
               onPressed: () {
-                context.go('/user/${widget.token}/trip/${widget.tripId}/attraction/newAttraction');
+                context.go('/user/${widget.token}/trip/${widget.tripId}/newAttraction');
               },
             ),
       ),

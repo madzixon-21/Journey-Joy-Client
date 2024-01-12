@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
 import 'dart:convert';
 import 'package:journey_joy_client/Classes/Functions/set_startpoint.dart';
-import 'package:journey_joy_client/Dialogs/Edit Form /form_dialog.dart';
+import 'package:journey_joy_client/Screens/Edit%20Form%20/edit_form.dart';
 
 class AddedAttractionTile extends StatelessWidget {
   const AddedAttractionTile({
@@ -186,7 +186,7 @@ class MinusButton extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditFormDialog(
+                      builder: (context) => EditForm(
                         attraction: attraction,
                         token: token,
                         tripId: tripId,

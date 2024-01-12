@@ -1,17 +1,25 @@
-/// # CheckboxHours
-/// ## Creates the checkbox widget for the personalized attraction form 
+/// # EditCheckboxHours
+/// ## Creates the checkbox widget for the personalized attraction form and edits information about opening hours
+/// 
+/// Creates three checkboxes for three opening hours options: Always open, same opening hours every day
+/// and different opening hours every day. 
+/// When "Always open" is checked, the getOpeningHours returns 0000 for every opening and closing hour.
+/// When "Same hours every day" is checked, a new textField appears to collect information about the opening hours.
+/// When "Different hours every day" is checked, seven textFields appear to specify the opening hours each day of the week.
+/// By default, "Different hours every day" is checked and the text fields are filled with the attraction openin hours.
 
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
 
-class CheckboxHours extends StatefulWidget {
-  const CheckboxHours({Key? key}) : super(key: key);
+class EditCheckboxHours extends StatefulWidget {
+  final List<List<String>> openingHours;
+  const EditCheckboxHours({required this.openingHours, Key? key}) : super(key: key);
 
   @override
-  CheckboxHoursState createState() => CheckboxHoursState();
+  EditCheckboxHoursState createState() => EditCheckboxHoursState();
 }
 
-class CheckboxHoursState extends State<CheckboxHours> {
+class EditCheckboxHoursState extends State<EditCheckboxHours> {
 
   final TextEditingController _sameHoursController = TextEditingController();
   final TextEditingController _mondayController = TextEditingController();
@@ -24,62 +32,92 @@ class CheckboxHoursState extends State<CheckboxHours> {
 
   bool isCheckedAlwaysOpen = false;
   bool isCheckedSameHours = false;
-  bool isCheckedDiffHours = false;
+  bool isCheckedDiffHours = true;
+
+  late List<List<String>> mutableOpeningHours;
+
+  @override
+  void initState() {
+    super.initState();
+    mutableOpeningHours = List.from(widget.openingHours);
+  }
 
   List<List<String>> getOpeningHours(){
-    List<List<String>> openingHours = List.generate(7, (_) => List<String>.filled(2, ''));
+
+    if(mutableOpeningHours.isEmpty){
+      mutableOpeningHours = List.generate(7, (_) => List<String>.filled(2, ''));
+    }
 
     if(isCheckedAlwaysOpen){
       
-      for (int i = 0; i < openingHours.length; i++) {
-        for (int j = 0; j < openingHours[i].length; j++) {
-          openingHours[i][j] = '0000';
+      for (int i = 0; i < mutableOpeningHours.length; i++) {
+        for (int j = 0; j < mutableOpeningHours[i].length; j++) {
+          mutableOpeningHours[i][j] = '0000';
         }
       }
 
     }else if( isCheckedSameHours){
       var hours = getHours(_sameHoursController.text);
 
-      for (int i = 0; i < openingHours.length; i++) {
-        openingHours[i][0] = hours[0];
-        openingHours[i][1] = hours[1];
+      for (int i = 0; i < mutableOpeningHours.length; i++) {
+        mutableOpeningHours[i][0] = hours[0];
+        mutableOpeningHours[i][1] = hours[1];
       }
 
     }else{
       var mon = getHours(_mondayController.text);
-      openingHours[0][0] = mon[0];
-      openingHours[0][1] = mon[1];
+      mutableOpeningHours[0][0] = mon[0];
+      mutableOpeningHours[0][1] = mon[1];
 
       var tue = getHours(_tuesdayController.text);
-      openingHours[1][0] = tue[0];
-      openingHours[1][1] = tue[1];
+      mutableOpeningHours[1][0] = tue[0];
+      mutableOpeningHours[1][1] = tue[1];
 
       var wed = getHours(_wednesdayController.text);
-      openingHours[2][0] = wed[0];
-      openingHours[2][1] = wed[1];
+      mutableOpeningHours[2][0] = wed[0];
+      mutableOpeningHours[2][1] = wed[1];
 
       var thu = getHours(_thursdayController.text);
-      openingHours[3][0] = thu[0];
-      openingHours[3][1] = thu[1];
+      mutableOpeningHours[3][0] = thu[0];
+      mutableOpeningHours[3][1] = thu[1];
 
       var fri = getHours(_fridayController.text);
-      openingHours[4][0] = fri[0];
-      openingHours[4][1] = fri[1];
+      mutableOpeningHours[4][0] = fri[0];
+      mutableOpeningHours[4][1] = fri[1];
 
       var sat = getHours(_saturdayController.text);
-      openingHours[5][0] = sat[0];
-      openingHours[6][1] = sat[1];
+      mutableOpeningHours[5][0] = sat[0];
+      mutableOpeningHours[5][1] = sat[1];
 
       var sun = getHours(_sundayController.text);
-      openingHours[7][0] = sun[0];
-      openingHours[7][1] = sun[1];
+      mutableOpeningHours[6][0] = sun[0];
+      mutableOpeningHours[6][1] = sun[1];
     }
 
-    return openingHours;
+    return mutableOpeningHours;
   }
 
   @override
   Widget build(BuildContext context) {
+
+    if(widget.openingHours.isEmpty){
+      _mondayController.text = "00:00 - 00:00";
+      _tuesdayController.text = "00:00 - 00:00";
+      _wednesdayController.text = "00:00 - 00:00";
+      _thursdayController.text = "00:00 - 00:00";
+      _fridayController.text = "00:00 - 00:00";
+      _saturdayController.text = "00:00 - 00:00";
+      _sundayController.text = "00:00 - 00:00";
+    }else{
+      _mondayController.text = getHoursString(widget.openingHours[0]);
+      _tuesdayController.text = getHoursString(widget.openingHours[1]);
+      _wednesdayController.text = getHoursString(widget.openingHours[2]);
+      _thursdayController.text = getHoursString(widget.openingHours[3]);
+      _fridayController.text = getHoursString(widget.openingHours[4]);
+      _saturdayController.text = getHoursString(widget.openingHours[5]);
+      _sundayController.text = getHoursString(widget.openingHours[6]);
+    }
+
     return Column(
       children: [
 
@@ -239,3 +277,21 @@ List<String> getHours(String input) {
 
   return [part1, part2];
 }
+
+String getHoursString(List<String> openingHours) {
+
+    if(openingHours.isEmpty){
+      return "00:00 - 00:00";
+    }
+    else{
+    String openingHour = openingHours[0];
+    String closingHour = openingHours[1];
+
+    String openingHourString = openingHour.substring(0, 2);
+    String openingMinuteString = openingHour.substring(2, 4);
+    String closingHourString = closingHour.substring(0, 2);
+    String closingMinuteString = closingHour.substring(2, 4);
+
+    return "$openingHourString:$openingMinuteString - $closingHourString:$closingMinuteString";
+    }
+  }

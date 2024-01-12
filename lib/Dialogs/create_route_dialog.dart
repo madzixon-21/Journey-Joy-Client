@@ -1,3 +1,9 @@
+/// # Create Route Dialog
+/// ## Dialog display before creating a route for list of attractions in a trip.
+/// 
+/// Collects the information needed to calculate the route for the trip. Has a text field for the number of days
+/// the trip must last and a drop down for the day of the week when it must start. The elevated button sends the http request.
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/Functions/get_route.dart';
@@ -7,7 +13,7 @@ class CreateRouteDialog extends StatefulWidget {
   final String token;
   final String tripId;
 
-  CreateRouteDialog({required this.token, required this.tripId, Key? key})
+  const CreateRouteDialog({required this.token, required this.tripId, Key? key})
       : super(key: key);
 
   @override
@@ -171,11 +177,9 @@ class CreateRouteDialogState extends State<CreateRouteDialog> {
                         if(response.statusCode == 200){
                           Navigator.pop(context, 'routeCreated');
                         }else{
-                          print(widget.token);
                           showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => ErrorDialog(prop: response.body));
-                          print(response.body);
                           _numDaysController.clear();
                           setState(() {
                             dropdownValue = week.first;

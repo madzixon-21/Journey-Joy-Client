@@ -1,17 +1,28 @@
+/// # Edit Trip dialog
+/// ## Dialog displayed for editing data related to a trip
+/// 
+/// Contains two text fields, one for the trip's name and one for the description, which are already filled with the 
+/// current name and descprition. It allows the user to choose a different photo for the trip's catalog cover.
+/// The elevated button sends the http request.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/Functions/edit_trip.dart';
 import 'package:image_picker/image_picker.dart';
 
+class EditTripDialog extends StatefulWidget {
 
-class EditTripDialog extends StatelessWidget {
-
-  EditTripDialog({required this.token, required this.tripId, super.key});
+  const EditTripDialog({required this.token, required this.tripId, super.key});
   final String token;
   final String tripId;
+ @override
+  EditTripDialogState createState() => EditTripDialogState();
+}
+
+class EditTripDialogState extends State<EditTripDialog> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  List<int>? imageBytes;
+  late List<int>? imageBytes;
 
   Future<void> getImage() async {
     final picker = ImagePicker();
@@ -180,8 +191,8 @@ class EditTripDialog extends StatelessWidget {
                         _nameController.text,
                         _descriptionController.text,
                         imageBytes,
-                        token,
-                        tripId
+                        widget.token,
+                        widget.tripId
                       ).then((bool editionSuccessful) {
                         if (editionSuccessful) {
                           Navigator.pop(context, 'tripEdited');

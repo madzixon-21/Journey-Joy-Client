@@ -1,4 +1,4 @@
-import 'package:journey_joy_client/Dialogs/Add%20Form/form_dialog.dart';
+import 'package:journey_joy_client/Screens/Add%20Form/form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -6,7 +6,7 @@ void main() {
   testWidgets('FormDialog widget count test', (WidgetTester tester) async {
     
     await tester.pumpWidget(MaterialApp(
-      home: FormDialog(),
+      home: Form(),
     ));
 
     expect(find.byType(TextField), findsNWidgets(12));

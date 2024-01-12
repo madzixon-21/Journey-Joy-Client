@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Form;
 import 'package:journey_joy_client/Cubits/trip_cubit.dart';
-import 'package:journey_joy_client/Screens/tripScreen.dart';
-import 'loginScreen.dart'; 
+import 'package:journey_joy_client/Screens/trip_screen.dart';
+import 'Screens/login_screen.dart'; 
 import 'package:go_router/go_router.dart';
-import 'Screens/catalogScreen.dart';
+import 'Screens/catalog_screen.dart';
 export 'package:go_router/go_router.dart';
-import 'Screens/attractionScreen.dart';
-import 'Dialogs/Add Form/form_dialog.dart';
+import 'Screens/attraction_screen.dart';
+import 'Screens/Add Form/form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Cubits/attraction_cubit.dart';
 
@@ -47,7 +47,7 @@ final _router = GoRouter(
 
     GoRoute(
       path: '/user/:token',
-      builder: (context, state) => catalogScreen(
+      builder: (context, state) => CatalogScreen(
         token: state.pathParameters['token']!,
       ),
       routes:[
@@ -61,20 +61,20 @@ final _router = GoRouter(
           routes:[
             GoRoute(
               path: 'attraction',
-              builder: (context, state) => attractionScreen(
+              builder: (context, state) => AttractionScreen(
                 token: state.pathParameters['token']!,
                 tripId: state.pathParameters['tripId']!,
               ),
-              routes:[
-                GoRoute(
-                  path: 'newAttraction',
-                  builder: (context, state) => FormDialog(
-                    token: state.pathParameters['token']!,
-                    tripId: state.pathParameters['tripId']!,
-                  ),
-                ),
-              ],
-            )
+            ),
+
+            GoRoute(
+              path: 'newAttraction',
+              builder: (context, state) => Form(
+                token: state.pathParameters['token']!,
+                tripId: state.pathParameters['tripId']!,
+              ),
+            ),
+              
           ]
         ),
       ],

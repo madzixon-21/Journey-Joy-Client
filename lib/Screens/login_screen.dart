@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Dialogs/sign_in_dialog.dart';
-import 'Classes/Functions/login.dart';
-import 'main.dart';
+import '../Classes/Functions/login.dart';
+import '../main.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
@@ -140,14 +140,11 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         LoginAction().login(_emailController.text, _passwordController.text).then((http.Response? response) {
                           if (response != null && response.statusCode != 500) {
-                            print(response.body);
                             if(response.statusCode == 200)
                             {
-
                               final Map<String, dynamic> jsonResponse = json.decode(response.body);
                               final String token = jsonResponse['token'];
                               context.go('/user/$token');
-
                             }else if(response.statusCode == 400) {
                               _emailController.clear();
                               _passwordController.clear();

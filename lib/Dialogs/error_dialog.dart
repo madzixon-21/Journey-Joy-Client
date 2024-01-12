@@ -1,11 +1,14 @@
-import 'package:flutter/material.dart';
+/// # Error Dialog
+/// ## Displayed after validation errors and in case of http response with status code 400 
+/// 
+/// Displays the text "Sometginf went wrong!" and the error message.
 
+import 'package:flutter/material.dart';
 
 class ErrorDialog extends StatelessWidget {
 
-  ErrorDialog({required this.prop, super.key});
+  const ErrorDialog({required this.prop, super.key});
   final String prop;
-
   
   @override
   Widget build(BuildContext context) {

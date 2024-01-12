@@ -1,3 +1,10 @@
+/// # Add attraction dialog
+/// ## Dialog displayed before sending a request to add an attraction to a trip
+/// 
+/// Collects necessary information about the attraction that is needed for the planning algorithm.
+/// The name and description of the atrraction are already filled and the user adds a description and the time needed for visiting.
+/// Contains an Elevated Button that sends thehttp request.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Classes/Functions/add_attraction.dart';
@@ -14,8 +21,6 @@ class AddAttractionDialog extends StatelessWidget {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _timeNeededController = TextEditingController();
-
-  
   
   @override
   Widget build(BuildContext context) {
@@ -194,6 +199,7 @@ class AddAttractionDialog extends StatelessWidget {
             ),
 
             const SizedBox(height:20),
+
             Center(
               child: ElevatedButton(
                 

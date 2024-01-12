@@ -1,16 +1,26 @@
+/// # New Trip Dialog
+/// ## Dialog display when the user wants to create a new trip
+/// 
+/// Allows the user to set the trip's name, description and choose a catalog cover picture.
+/// The elevated button send the http request.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/Functions/create_trip.dart';
 import 'package:image_picker/image_picker.dart';
 
+class NewTripDialog extends StatefulWidget {
 
-class NewTripDialog extends StatelessWidget {
-
-  NewTripDialog({required this.token, super.key});
+  const NewTripDialog({required this.token, super.key});
   final String token;
+   @override
+  NewTripDialogState createState() => NewTripDialogState();
+}
+
+class NewTripDialogState extends State<NewTripDialog> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  List<int>? imageBytes;
+  late List<int>? imageBytes;
 
   Future<void> getImage() async {
     final picker = ImagePicker();
@@ -179,9 +189,9 @@ class NewTripDialog extends StatelessWidget {
                         _nameController.text,
                         _descriptionController.text,
                         imageBytes,
-                        token,
-                      ).then((bool Successful) {
-                        if (Successful) {
+                        widget.token,
+                      ).then((bool successful) {
+                        if (successful) {
                           Navigator.pop(context, 'tripCreated');
                         } else {
                           _nameController.clear();

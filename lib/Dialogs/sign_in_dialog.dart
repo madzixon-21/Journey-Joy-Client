@@ -1,3 +1,9 @@
+/// # Sign in dialog
+/// ## Displays when a new user want to register
+/// 
+/// Contains text fields to collect the necessary data to create a new acoount. The user adds a nickname, an email address,
+///  a password and confirms the password.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/Functions/signin.dart';
 import 'package:http/http.dart' as http;
@@ -7,10 +13,10 @@ class SigninDialog extends StatelessWidget {
 
   SigninDialog({super.key});
 
-  final TextEditingController _SIemailController = TextEditingController();
-  final TextEditingController _SIpasswordController = TextEditingController();
-  final TextEditingController _SIpasswordController2 = TextEditingController();
-  final TextEditingController _SInicknameController = TextEditingController();
+  final TextEditingController _sIemailController = TextEditingController();
+  final TextEditingController _sIpasswordController = TextEditingController();
+  final TextEditingController _sIpasswordController2 = TextEditingController();
+  final TextEditingController _sInicknameController = TextEditingController();
   
   @override
   Widget build(BuildContext context) {
@@ -61,7 +67,7 @@ class SigninDialog extends StatelessWidget {
                   fontFamily: 'Lohit Tamil',
                   letterSpacing: 2,
                 ),
-                controller: _SInicknameController,
+                controller: _sInicknameController,
                 decoration: InputDecoration(
                   hintText: 'Username',
                   hintStyle: TextStyle(
@@ -100,7 +106,7 @@ class SigninDialog extends StatelessWidget {
                   fontFamily: 'Lohit Tamil',
                   letterSpacing: 2,
                 ),
-                controller: _SIemailController,
+                controller: _sIemailController,
                 decoration: InputDecoration(
                   hintText: 'Email',
                   hintStyle: TextStyle(
@@ -132,7 +138,6 @@ class SigninDialog extends StatelessWidget {
               alignment: Alignment.center,
               
               child: TextField(
-                maxLines: null,
                 key:const Key('passwordTextField'),
                 style: TextStyle(
                   color: Colors.grey.shade900,
@@ -140,7 +145,7 @@ class SigninDialog extends StatelessWidget {
                   letterSpacing: 2,
                 ),
 
-                controller: _SIpasswordController,
+                controller: _sIpasswordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Password',
@@ -173,7 +178,6 @@ class SigninDialog extends StatelessWidget {
               alignment: Alignment.center,
               
               child: TextField(
-                maxLines: null,
                 key:const Key('confirmPasswordTextField'),
                 style: TextStyle(
                   color: Colors.grey.shade900,
@@ -181,7 +185,7 @@ class SigninDialog extends StatelessWidget {
                   letterSpacing: 2,
                 ),
 
-                controller: _SIpasswordController2,
+                controller: _sIpasswordController2,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Confirm password',
@@ -211,20 +215,20 @@ class SigninDialog extends StatelessWidget {
             Center(
               child: TextButton(
                   onPressed: () {
-                    if (_SIpasswordController.text == _SIpasswordController2.text) {
+                    if (_sIpasswordController.text == _sIpasswordController2.text) {
                       SignInAction().signIn(
-                        _SInicknameController.text,
-                        _SIpasswordController.text,
-                        _SIemailController.text,
+                        _sInicknameController.text,
+                        _sIpasswordController.text,
+                        _sIemailController.text,
                       ).then((http.Response? response) {
                         if(response != null){
                           if (response.statusCode == 200) {
                             Navigator.pop(context);
                           } else {
-                            _SInicknameController.clear();
-                            _SIemailController.clear();
-                            _SIpasswordController.clear();
-                            _SIpasswordController2.clear();
+                            _sInicknameController.clear();
+                            _sIemailController.clear();
+                            _sIpasswordController.clear();
+                            _sIpasswordController2.clear();
 
                             showDialog<String>(
                             context: context,
@@ -235,10 +239,10 @@ class SigninDialog extends StatelessWidget {
                       });
                     }  
                     else {
-                      _SInicknameController.clear();
-                      _SIemailController.clear();
-                      _SIpasswordController.clear();
-                      _SIpasswordController2.clear();
+                      _sInicknameController.clear();
+                      _sIemailController.clear();
+                      _sIpasswordController.clear();
+                      _sIpasswordController2.clear();
                     }
                   },
                   style: TextButton.styleFrom(

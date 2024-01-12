@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 class TripScreen extends StatefulWidget {
   final String tripId;
   final String token;
-  TripScreen({required this.tripId, required this.token, super.key});
+  const TripScreen({required this.tripId, required this.token, super.key});
   @override
   TripScreenState createState() => TripScreenState();
 }
@@ -215,7 +215,7 @@ Widget buildAttractionsList(Trip trip) {
                       } else {
                         showDialog<String>(
                         context: context,
-                        builder: (BuildContext context) => ErrorDialog(prop: "Make sure to add your hotel accomodation and set it as a starting point of your trip."));
+                        builder: (BuildContext context) => const ErrorDialog(prop: "Make sure to add your hotel accomodation and set it as a starting point of your trip."));
                       } 
                     },
                     style: ElevatedButton.styleFrom(
