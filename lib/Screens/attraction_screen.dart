@@ -1,8 +1,9 @@
 ///# Attraction Screen
 ///## Screen for displaying attraction from tripAdvisor after making a search.
 ///
-/// Screen consisting of a Scaffold with an appbar and body. The appar contains a search bar where the user can search 
-/// attractions using key words. The body displays a list of attraction 
+/// Screen consisting of a Scaffold with an appar that contains a search bar where the user can search 
+/// attractions using key words. The body displays a list of attractions provided by tripAdvisor that match 
+/// the search key word. Each attraction has a plus button that allows the user to add the attraction to the trip.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

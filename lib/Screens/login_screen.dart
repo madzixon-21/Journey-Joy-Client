@@ -1,3 +1,11 @@
+/// # Log in screen
+/// ## Allows a registered user to enter their account
+/// 
+/// The log in screen contains text fields for the user to write their e-mail address and password.
+/// The "Log in" button sends the http request with this data. 
+/// The "Sign in" button opens the sign in dialog which collects the necessary information to register
+/// a new user.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Dialogs/sign_in_dialog.dart';
 import '../Classes/Functions/login.dart';
