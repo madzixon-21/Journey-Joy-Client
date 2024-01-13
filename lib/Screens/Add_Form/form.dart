@@ -5,7 +5,7 @@
 /// Uses checkBoxPrices and chackBoxHours for collecting information about opening hours and prices.
 
 import 'package:flutter/material.dart';
-import 'package:journey_joy_client/Tiles/FormTile.dart';
+import 'package:journey_joy_client/Tiles/TextFormTile.dart';
 import 'package:journey_joy_client/Screens/Add_Form/checkboxes_hours.dart';
 import 'package:journey_joy_client/Screens/Add_Form/checkboxes_prices.dart';
 import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
@@ -14,18 +14,18 @@ import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Classes/Functions/add_attraction.dart';
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
 
-class Form extends StatefulWidget {
+class FormDupa extends StatefulWidget {
 
   final String token;
   final String tripId;
  
-  const Form({required this.token, required this.tripId, super.key});
+  const FormDupa({required this.token, required this.tripId, super.key});
 
   @override
-  FormState createState() => FormState();
+  FormDupaState createState() => FormDupaState();
 }
 
-class FormState extends State<Form> {
+class FormDupaState extends State<FormDupa> {
   final TextEditingController _attractionNameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
@@ -102,13 +102,13 @@ class FormState extends State<Form> {
                   children: [
                     const SizedBox(height: 10),
 
-                    FormTile(
+                    TextFormTile(
                       label: 'Attraction name:',
                       description: 'Name',
                       controller: _attractionNameController,
                     ),
 
-                    FormTile(
+                    TextFormTile(
                       label: 'Description:',
                       description: 'Description',
                       controller: _descriptionController,
@@ -163,7 +163,7 @@ class FormState extends State<Form> {
                       ],
                     ),
 
-                    FormTile(
+                    TextFormTile(
                       label: 'Time needed:',
                       description: 'Time in minutes',
                       controller: _timeController,

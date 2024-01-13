@@ -5,7 +5,7 @@
 /// Uses editCheckBoxPrices and editCheckBoxHours for collecting information about opening hours and prices.
 
 import 'package:flutter/material.dart';
-import 'package:journey_joy_client/Tiles/FormTile.dart';
+import 'package:journey_joy_client/Tiles/TextFormTile.dart';
 import 'package:journey_joy_client/Screens/Edit_Form/checkboxes_hours.dart';
 import 'package:journey_joy_client/Screens/Edit_Form/checkboxes_prices.dart';
 import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
@@ -115,13 +115,13 @@ class EditFormState extends State<EditForm> {
                   children: [
                     const SizedBox(height: 10),
 
-                    FormTile(
+                    TextFormTile(
                       label: 'Attraction name:',
                       description: 'Name',
                       controller: _attractionNameController,
                     ),
 
-                    FormTile(
+                    TextFormTile(
                       label: 'Description:',
                       description: 'Description',
                       controller: _descriptionController,
@@ -176,7 +176,7 @@ class EditFormState extends State<EditForm> {
                       ],
                     ),
 
-                    FormTile(
+                    TextFormTile(
                       label: 'Time needed:',
                       description: 'Time in minutes',
                       controller: _timeController,
