@@ -24,8 +24,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: Container(
+      body:SingleChildScrollView(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/login_background.jpg'),
@@ -69,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 50),
         
                     Container(
-                      height:40,
+                      height:45,
                       width: 300,
                       alignment: Alignment.center,
                       
@@ -81,12 +82,12 @@ class LoginScreen extends StatelessWidget {
                         ),
                         controller: _emailController,
                         decoration: InputDecoration(
-                          hintText: 'email',
+                          hintText: 'Email',
                           hintStyle: TextStyle(
                             color: Colors.grey.shade900, 
                             fontFamily: 'Lohit Tamil', 
                             letterSpacing: 1.5,),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -106,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height:20),
         
                     Container(
-                      height:40,
+                      height:45,
                       width: 300,
                       alignment: Alignment.center,
                       
@@ -120,12 +121,12 @@ class LoginScreen extends StatelessWidget {
                         controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
-                          hintText: 'password',
+                          hintText: 'Password',
                           hintStyle: TextStyle(
                             color: Colors.grey.shade900, 
                             fontFamily: 'Lohit Tamil', 
                             letterSpacing: 1.5,),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -206,7 +207,7 @@ class LoginScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey.shade900,
-                            fontSize: 13,
+                            fontSize: 14,
                             fontFamily: 'Lohit Tamil',
                             fontWeight: FontWeight.w400,
                             height: 0.23,
@@ -250,7 +251,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                       
-                    const SizedBox(height: 30,),
+                    const SizedBox(height: 20,),
         
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -290,12 +291,15 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+
+                    const SizedBox(height: 25,),
                   ],
                 ),
               ),  
             ],
           ), 
         ),
+      ),
       ),
     );              
   }

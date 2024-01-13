@@ -55,13 +55,11 @@ class SigninDialog extends StatelessWidget {
             const SizedBox(height: 35),
 
             Container(
-              height:40,
-              width: 250,
+              height:45,
+              width: 270,
               alignment: Alignment.center,
               
               child: TextField(
-                maxLines: null,
-                key: const Key('nicknameTextField'),
                 style: TextStyle(
                   color: Colors.grey.shade900,
                   fontFamily: 'Lohit Tamil',
@@ -74,7 +72,7 @@ class SigninDialog extends StatelessWidget {
                     color: Colors.grey.shade900, 
                     fontFamily: 'Lohit Tamil', 
                     letterSpacing: 1.5,),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -94,13 +92,10 @@ class SigninDialog extends StatelessWidget {
             const SizedBox(height:20),
 
             Container(
-              height:40,
-              width: 250,
+              height:45,
+              width: 270,
               alignment: Alignment.center,
-              
               child: TextField(
-                maxLines: null,
-                key: const Key('emailTextField'),
                 style: TextStyle(
                   color: Colors.grey.shade900,
                   fontFamily: 'Lohit Tamil',
@@ -113,7 +108,7 @@ class SigninDialog extends StatelessWidget {
                     color: Colors.grey.shade900, 
                     fontFamily: 'Lohit Tamil', 
                     letterSpacing: 1.5,),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -133,8 +128,8 @@ class SigninDialog extends StatelessWidget {
             const SizedBox(height:20),
 
             Container(
-              height:40,
-              width: 250,
+              height:45,
+              width: 270,
               alignment: Alignment.center,
               
               child: TextField(
@@ -153,7 +148,7 @@ class SigninDialog extends StatelessWidget {
                     color: Colors.grey.shade900, 
                     fontFamily: 'Lohit Tamil', 
                     letterSpacing: 1.5,),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -173,8 +168,8 @@ class SigninDialog extends StatelessWidget {
             const SizedBox(height: 20,),
 
             Container(
-              height:40,
-              width: 250,
+              height:45,
+              width: 270,
               alignment: Alignment.center,
               
               child: TextField(
@@ -193,7 +188,7 @@ class SigninDialog extends StatelessWidget {
                     color: Colors.grey.shade900, 
                     fontFamily: 'Lohit Tamil', 
                     letterSpacing: 1.5,),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -210,10 +205,10 @@ class SigninDialog extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 35),
+            const SizedBox(height: 25),
 
             Center(
-              child: TextButton(
+              child: ElevatedButton(
                   onPressed: () {
                     if (_sIpasswordController.text == _sIpasswordController2.text) {
                       SignInAction().signIn(
@@ -256,6 +251,7 @@ class SigninDialog extends StatelessWidget {
                       color: Colors.grey.shade900,
                       fontFamily: 'Lohit Tamil',
                       letterSpacing: 2,
+                      fontSize: 15,
                     ),
                   ),
                 ),

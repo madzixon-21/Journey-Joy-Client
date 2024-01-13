@@ -73,8 +73,6 @@ class NewTripDialogState extends State<NewTripDialog> {
               alignment: Alignment.center,
               
               child: TextField(
-                key: const Key('tripNameTextField'),
-                maxLines: null,
                 style: TextStyle(
                   color: Colors.grey.shade900,
                   fontFamily: 'Lohit Tamil',
@@ -107,7 +105,6 @@ class NewTripDialogState extends State<NewTripDialog> {
             const SizedBox(height:20),
 
             Container(
-              height:40,
               width: 250,
               alignment: Alignment.center,
               
