@@ -8,7 +8,7 @@
 /// When "Different hours every day" is checked, seven textFields appear to specify the opening hours each day of the week.
 
 import 'package:flutter/material.dart';
-import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
+import 'package:journey_joy_client/Tiles/HourFormTile.dart';
 
 class CheckboxHours extends StatefulWidget {
   const CheckboxHours({Key? key}) : super(key: key);
@@ -19,14 +19,30 @@ class CheckboxHours extends StatefulWidget {
 
 class CheckboxHoursState extends State<CheckboxHours> {
 
-  final TextEditingController _sameHoursController = TextEditingController();
-  final TextEditingController _mondayController = TextEditingController();
-  final TextEditingController _tuesdayController = TextEditingController();
-  final TextEditingController _wednesdayController = TextEditingController();
-  final TextEditingController _thursdayController = TextEditingController();
-  final TextEditingController _fridayController = TextEditingController();
-  final TextEditingController _saturdayController = TextEditingController();
-  final TextEditingController _sundayController = TextEditingController();
+  final TextEditingController _sameHoursControllerOpen = TextEditingController();
+  final TextEditingController _sameHoursControllerClose = TextEditingController();
+
+  final TextEditingController _mondayControllerOpen = TextEditingController();
+  final TextEditingController _mondayControllerClose = TextEditingController();
+
+  final TextEditingController _tuesdayControllerOpen = TextEditingController();
+  final TextEditingController _tuesdayControllerClose = TextEditingController();
+
+  final TextEditingController _wednesdayControllerOpen = TextEditingController();
+  final TextEditingController _wednesdayControllerClose = TextEditingController();
+
+  final TextEditingController _thursdayControllerOpen = TextEditingController();
+  final TextEditingController _thursdayControllerClose = TextEditingController();
+
+  final TextEditingController _fridayControllerOpen = TextEditingController();
+  final TextEditingController _fridayControllerClose = TextEditingController();
+
+  final TextEditingController _saturdayControllerOpen = TextEditingController();
+  final TextEditingController _saturdayControllerClose = TextEditingController();
+  
+  final TextEditingController _sundayControllerOpen = TextEditingController();
+  final TextEditingController _sundayControllerClose = TextEditingController();
+
 
   bool isCheckedAlwaysOpen = true;
   bool isCheckedSameHours = false;
@@ -38,13 +54,12 @@ class CheckboxHoursState extends State<CheckboxHours> {
     if(isCheckedAlwaysOpen){
       
       for (int i = 0; i < openingHours.length; i++) {
-        for (int j = 0; j < openingHours[i].length; j++) {
-          openingHours[i][j] = '0000';
-        }
+        openingHours[i][0] = '0000';
+        openingHours[i][1] = '2400';
       }
 
     }else if( isCheckedSameHours){
-      var hours = getHours(_sameHoursController.text);
+       var hours = getHours(_sameHoursControllerOpen.text, _sameHoursControllerClose.text);
 
       for (int i = 0; i < openingHours.length; i++) {
         openingHours[i][0] = hours[0];
@@ -52,31 +67,31 @@ class CheckboxHoursState extends State<CheckboxHours> {
       }
 
     }else{
-      var mon = getHours(_mondayController.text);
+      var mon = getHours(_mondayControllerOpen.text, _mondayControllerClose.text);
       openingHours[0][0] = mon[0];
       openingHours[0][1] = mon[1];
 
-      var tue = getHours(_tuesdayController.text);
+      var tue = getHours(_tuesdayControllerOpen.text, _tuesdayControllerClose.text);
       openingHours[1][0] = tue[0];
       openingHours[1][1] = tue[1];
 
-      var wed = getHours(_wednesdayController.text);
+      var wed = getHours(_wednesdayControllerOpen.text, _wednesdayControllerClose.text);
       openingHours[2][0] = wed[0];
       openingHours[2][1] = wed[1];
 
-      var thu = getHours(_thursdayController.text);
+      var thu = getHours(_thursdayControllerOpen.text, _thursdayControllerClose.text);
       openingHours[3][0] = thu[0];
       openingHours[3][1] = thu[1];
 
-      var fri = getHours(_fridayController.text);
+      var fri = getHours(_fridayControllerOpen.text, _fridayControllerClose.text);
       openingHours[4][0] = fri[0];
       openingHours[4][1] = fri[1];
 
-      var sat = getHours(_saturdayController.text);
+      var sat = getHours(_saturdayControllerOpen.text, _saturdayControllerClose.text);
       openingHours[5][0] = sat[0];
       openingHours[5][1] = sat[1];
 
-      var sun = getHours(_sundayController.text);
+      var sun = getHours(_sundayControllerOpen.text, _sundayControllerClose.text);
       openingHours[6][0] = sun[0];
       openingHours[6][1] = sun[1];
     }
@@ -86,9 +101,33 @@ class CheckboxHoursState extends State<CheckboxHours> {
 
   @override
   Widget build(BuildContext context) {
+
+    _sameHoursControllerOpen.text = '00:00';
+    _sameHoursControllerClose.text = '23:59';
+
+    _mondayControllerOpen.text = '00:00';
+    _mondayControllerClose.text = '23:59';
+
+    _tuesdayControllerOpen.text = '00:00';
+    _tuesdayControllerClose.text = '23:59';
+
+    _wednesdayControllerOpen.text = '00:00';
+    _wednesdayControllerClose.text = '23:59';
+
+    _thursdayControllerOpen.text = '00:00';
+    _thursdayControllerClose.text = '23:59'; 
+
+    _fridayControllerOpen.text = '00:00';
+    _fridayControllerClose.text = '23:59'; 
+
+    _saturdayControllerOpen.text = '00:00';
+    _saturdayControllerClose.text = '23:59'; 
+
+    _sundayControllerOpen.text = '00:00';
+    _sundayControllerClose.text = '23:59'; 
+
     return Column(
       children: [
-
         Row(
           children: [
             Checkbox(
@@ -145,10 +184,10 @@ class CheckboxHoursState extends State<CheckboxHours> {
 
         Visibility(
           visible: isCheckedSameHours,
-          child: FormTileSmall(
-            label: 'Set opening hours:',
-            description: '00:00 - 00:00',
-            controller: _sameHoursController,
+          child: HoursFormTile(
+            label: 'Set opening hours',
+            controllerOpen: _sameHoursControllerOpen,
+            controllerClose: _sameHoursControllerClose,
           ),
         ),
 
@@ -184,48 +223,47 @@ class CheckboxHoursState extends State<CheckboxHours> {
             visible: isCheckedDiffHours,
             child: Column(
               children: [
-                FormTileSmall(
-                  label: 'Monday:',
-                  description: '00:00 - 00:00',
-                  controller: _mondayController,
+                HoursFormTile(
+                  label: 'Monday',
+                  controllerOpen: _mondayControllerOpen,
+                  controllerClose: _mondayControllerClose,
                 ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Tuesday:',
-                  description: '00:00 - 00:00',
-                  controller: _tuesdayController,
+                HoursFormTile(
+                  label: 'Tuesday',
+                  controllerOpen: _tuesdayControllerOpen,
+                  controllerClose: _tuesdayControllerClose,
                 ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Wednesday:',
-                  description: '00:00 - 00:00',
-                  controller: _wednesdayController,
+
+                HoursFormTile(
+                  label: 'Wednesday',
+                  controllerOpen: _wednesdayControllerOpen,
+                  controllerClose: _wednesdayControllerClose,
                 ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Thursday:',
-                  description: '00:00 - 00:00',
-                  controller: _thursdayController,
+
+                HoursFormTile(
+                  label: 'Thursday',
+                  controllerOpen: _thursdayControllerOpen,
+                  controllerClose: _thursdayControllerClose,
                 ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Friday:',
-                  description: '00:00 - 00:00',
-                  controller: _fridayController,
+
+                HoursFormTile(
+                  label: 'Friday',
+                  controllerOpen: _fridayControllerOpen,
+                  controllerClose: _fridayControllerClose,
                 ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Saturday:',
-                  description: '00:00 - 00:00',
-                  controller: _saturdayController,
+
+                HoursFormTile(
+                  label: 'Saturday',
+                  controllerOpen: _saturdayControllerOpen,
+                  controllerClose: _saturdayControllerClose,
                 ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Sunday:',
-                  description: '00:00 - 00:00',
-                  controller: _sundayController,
+
+                HoursFormTile(
+                  label: 'Sunday',
+                  controllerOpen: _sundayControllerOpen,
+                  controllerClose: _sundayControllerClose,
                 ),
-                const SizedBox(height: 8),
+
               ],
             ),
           ),
@@ -235,11 +273,9 @@ class CheckboxHoursState extends State<CheckboxHours> {
   }
 }
 
-List<String> getHours(String input) {
-  String numericString = input.replaceAll(RegExp(r'[^0-9]'), '');
-
-  String part1 = numericString.substring(0, 4);
-  String part2 = numericString.substring(4);
+List<String> getHours(String inputOpen, String inputClose) {
+  String part1 = inputOpen.replaceAll(RegExp(r'[^0-9]'), '');
+  String part2 = inputClose.replaceAll(RegExp(r'[^0-9]'), '');
 
   return [part1, part2];
 }
