@@ -15,6 +15,7 @@ import 'package:journey_joy_client/Tiles/NumberFormTile.dart';
 import 'package:journey_joy_client/Tiles/TextFormTile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_joy_client/Cubits/trip_cubit.dart';
+import 'package:go_router/go_router.dart';
 
 class AddForm extends StatefulWidget {
   final String token;
@@ -297,7 +298,7 @@ class AddFormState extends State<AddForm> {
                   )
                       .then((bool successful) {
                     if (successful) {
-                      context.read<TripsCubit>().fetch(widget.token).then((_)=> Navigator.of(context).pop());
+                      context.read<TripsCubit>().fetch(widget.token).then((_)=> context.go('/user/${widget.token}/trip/${widget.tripId}'));
                     } else {
                       showDialog<String>(
                         context: context,
