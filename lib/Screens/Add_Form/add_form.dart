@@ -213,7 +213,9 @@ class AddFormState extends State<AddForm> {
                 ),
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: CheckboxHours(key: hoursKey)),
+              child: CheckboxHours(key: hoursKey),),
+
+
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
