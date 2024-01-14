@@ -1,3 +1,11 @@
+/// # Catalog screen
+/// ## Displays all the trips as catalogs of attractions
+/// 
+/// The catalog screen shows the user's trips in a grid structure, displaying the name and photo of each trip.
+/// The screen uses the TripsCubit and adapts to the different states. For the loading state it shows a circular
+/// progress indicator and for the error it displays the error message. 
+/// The gesture detector enables editing and deleting on long press and entering the trip's details on tap.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_joy_client/Cubits/trip_cubit.dart';
@@ -26,18 +34,18 @@ class CatalogScreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 219, 235, 199),
-          title: const Text('Your planned trips',
-          style: TextStyle(
-            color:  Colors.black,
-            fontFamily: 'Lohit Tamil',
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2,
-            ),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 219, 235, 199),
+        title: const Text('Your planned trips',
+        style: TextStyle(
+          color:  Colors.black,
+          fontFamily: 'Lohit Tamil',
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 2,
           ),
         ),
+      ),
         body: Stack(
         children: [
           Image.asset(
@@ -190,7 +198,6 @@ class CatalogScreenState extends State<CatalogScreen> {
                   },
                 );
               case TripsError:
-
                 final errorMessage = (currentState as TripsError).message;
                 return Center(
                   child: Text(
@@ -204,32 +211,30 @@ class CatalogScreenState extends State<CatalogScreen> {
           },
         ),
         ],
-        ),
-
-         floatingActionButton: Builder(
-          builder: (context) {
-            return FloatingActionButton(
-              
-              backgroundColor: const Color(0xFF9DC183),
-              child: const Icon(
-                Icons.add,
-                color: Colors.black45,
-                size: 32,
-              ),
-              onPressed: () {
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => NewTripDialog(token: widget.token),
-                  ).then((result){
-                    if (result == 'tripCreated') {
-                      context.read<TripsCubit>().fetch(widget.token);
-                    }
-                  }
-              );
-            }
-          );
-        },
       ),
+
+    floatingActionButton: Builder(
+      builder: (context) {
+        return FloatingActionButton(
+          backgroundColor: const Color(0xFF9DC183),
+          child: const Icon(
+            Icons.add,
+            color: Colors.black45,
+            size: 32,
+          ),
+          onPressed: () {
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => NewTripDialog(token: widget.token),
+            ).then((result){
+              if (result == 'tripCreated') {
+                context.read<TripsCubit>().fetch(widget.token);
+              }
+            });
+          }
+        );
+      },
+    ),
     );
   }
 }

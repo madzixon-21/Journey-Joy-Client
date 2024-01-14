@@ -1,3 +1,13 @@
+/// # Trip screen
+/// ## Displays the details of the trip with the corresponding tripId
+/// 
+/// The screen displays the trip picture, along with it's name and description in the top part.
+/// Below it shows the added attractions in two different ways.
+/// When the trip doesn't have a calculated route, the screen shows a list of attractions with the "Options"
+/// button which allows the user to edit or delete the attraction from the trip. 
+/// If the trip has a planned route, the screen displays the attractions in the right order, separating 
+/// them into different days.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/trip.dart';
 import 'package:journey_joy_client/Dialogs/create_route_dialog.dart';
