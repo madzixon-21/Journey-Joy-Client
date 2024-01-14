@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart' hide Form;
 import 'package:journey_joy_client/Cubits/trip_cubit.dart';
+import 'package:journey_joy_client/Screens/Add_Form/add_form_screen.dart';
 import 'package:journey_joy_client/Screens/trip_screen.dart';
 import 'Screens/login_screen.dart'; 
 import 'package:go_router/go_router.dart';
 import 'Screens/catalog_screen.dart';
 export 'package:go_router/go_router.dart';
 import 'Screens/attraction_screen.dart';
-import 'Screens/Add_Form/form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Cubits/attraction_cubit.dart';
 
@@ -69,7 +69,7 @@ final _router = GoRouter(
 
             GoRoute(
               path: 'newAttraction',
-              builder: (context, state) => Form(
+              builder: (context, state) => AddFormScreen(
                 token: state.pathParameters['token']!,
                 tripId: state.pathParameters['tripId']!,
               ),
