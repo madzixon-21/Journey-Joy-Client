@@ -226,8 +226,8 @@ Widget buildAttractionsList(Trip trip) {
                         showDialog<String>(
                         context: context,
                         builder: (BuildContext context) => const ErrorDialog(prop: "Make sure to add your hotel accomodation and set it as a starting point of your trip."));
-                      } 
-                    },
+                       } 
+                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
