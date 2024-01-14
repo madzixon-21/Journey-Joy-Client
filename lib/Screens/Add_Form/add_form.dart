@@ -1,6 +1,6 @@
 /// # AddForm
 /// ## Form screen used for collecting data about a personalized attraction.
-/// 
+///
 /// Contains text fields for collecting attraction details and location data.
 /// Uses checkBoxPrices and chackBoxHours for collecting information about opening hours and prices.
 
@@ -39,6 +39,7 @@ class AddFormState extends State<AddForm> {
   final TextEditingController _countryController = TextEditingController();
 
   late List<int>? imageBytes;
+  int _ifPictureAdded = 0;
 
   Future<void> getImage() async {
     final picker = ImagePicker();
@@ -46,6 +47,7 @@ class AddFormState extends State<AddForm> {
 
     if (pickedFile != null) {
       imageBytes = await pickedFile.readAsBytes();
+      _ifPictureAdded = 1;
     }
   }
 
@@ -275,8 +277,10 @@ class AddFormState extends State<AddForm> {
                       pricesKey.currentState?.getPrices() ?? [];
                   List<List<String>> openingHours =
                       hoursKey.currentState?.getOpeningHours() ?? [];
-                  
-                  imageBytes = List.empty();
+
+                  if (_ifPictureAdded == 0) {
+                    imageBytes = List.empty();
+                  }
 
                   AddAttractionAction()
                       .add(

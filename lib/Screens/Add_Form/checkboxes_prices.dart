@@ -57,6 +57,17 @@ class CheckboxPricesState extends State<CheckboxPrices> {
 
   @override
   Widget build(BuildContext context) {
+
+     _mondayController.text = '0';
+    _samePriceController.text = '0';
+    _mondayController.text = '0';
+    _tuesdayController.text = '0';
+    _wednesdayController.text = '0';
+    _thursdayController.text = '0';
+    _fridayController.text = '0';
+    _saturdayController.text = '0';
+    _sundayController.text = '0';
+
     return Column(
       children: [
         Row(
