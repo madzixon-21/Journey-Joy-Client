@@ -8,7 +8,6 @@
 /// When "Different hours every day" is checked, seven textFields appear to specify the price each day of the week.
 
 import 'package:flutter/material.dart';
-import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
 import 'package:journey_joy_client/Tiles/NumberFormTile.dart';
 
 class CheckboxPrices extends StatefulWidget {
