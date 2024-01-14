@@ -13,6 +13,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Classes/Functions/edit_attraction.dart';
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:journey_joy_client/Cubits/trip_cubit.dart';
+
 
 class EditForm extends StatefulWidget {
 
@@ -347,7 +350,7 @@ class EditFormState extends State<EditForm> {
                         widget.token,
                       ).then((bool successful) {
                         if (successful) {
-                          Navigator.of(context).pop();
+                          context.read<TripsCubit>().fetch(widget.token).then((_) {Navigator.pop(context);});
                         } else {
                           showDialog<String>(
                             context: context,

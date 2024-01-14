@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Dialogs/add_attraction_dialog.dart';
+import 'package:journey_joy_client/Cubits/trip_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class AttractionTile extends StatelessWidget {
   const AttractionTile({
@@ -95,7 +98,13 @@ class PlusButton extends StatelessWidget {
                   attraction: attraction,
                 );
               },
-            );
+            ).then((result) {
+              if (result == 'attractionAdded') {
+                context.read<TripsCubit>().fetch(token).then((_) {
+                  Navigator.pop(context);
+                });
+              }
+            });
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF9DC183), 
