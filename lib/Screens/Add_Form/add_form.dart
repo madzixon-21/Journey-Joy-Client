@@ -13,6 +13,8 @@ import 'package:journey_joy_client/Screens/Add_Form/checkboxes_hours.dart';
 import 'package:journey_joy_client/Screens/Add_Form/checkboxes_prices.dart';
 import 'package:journey_joy_client/Tiles/NumberFormTile.dart';
 import 'package:journey_joy_client/Tiles/TextFormTile.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:journey_joy_client/Cubits/trip_cubit.dart';
 
 class AddForm extends StatefulWidget {
   final String token;
@@ -295,7 +297,7 @@ class AddFormState extends State<AddForm> {
                   )
                       .then((bool successful) {
                     if (successful) {
-                      Navigator.of(context).pop();
+                      context.read<TripsCubit>().fetch(widget.token).then((_)=> Navigator.of(context).pop());
                     } else {
                       showDialog<String>(
                         context: context,

@@ -190,11 +190,9 @@ class MinusButton extends StatelessWidget {
                         attraction: attraction,
                         token: token,
                         tripId: tripId,
-                      ),
+                      )
                     ),
                   );
-
-                  context.read<TripsCubit>().fetch(token).then((_) {Navigator.pop(context);});
                 },
               
                 child: const Text('Edit', 
