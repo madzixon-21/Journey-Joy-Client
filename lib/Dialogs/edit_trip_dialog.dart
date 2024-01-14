@@ -70,7 +70,6 @@ class EditTripDialogState extends State<EditTripDialog> {
             const SizedBox(height: 35),
 
             Container(
-              height:40,
               width: 250,
               alignment: Alignment.center,
               
@@ -109,7 +108,6 @@ class EditTripDialogState extends State<EditTripDialog> {
             const SizedBox(height:20),
 
             Container(
-              height:40,
               width: 250,
               alignment: Alignment.center,
               
