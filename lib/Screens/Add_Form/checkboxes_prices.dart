@@ -1,14 +1,15 @@
 /// # CheckboxPrices
 /// ## Creates the checkbox widget for the personalized attraction form and collects information about prices.
-/// 
+///
 /// Creates three checkboxes for three prices options: Always free, same price every day
-/// and different prices every day. 
+/// and different prices every day.
 /// When "Always free" is checked, the getPrices returns 0 for every opening and closing hour.
 /// When "Same price every day" is checked, a new textField appears to collect information about the price.
 /// When "Different hours every day" is checked, seven textFields appear to specify the price each day of the week.
 
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
+import 'package:journey_joy_client/Tiles/NumberFormTile.dart';
 
 class CheckboxPrices extends StatefulWidget {
   const CheckboxPrices({Key? key}) : super(key: key);
@@ -18,7 +19,6 @@ class CheckboxPrices extends StatefulWidget {
 }
 
 class CheckboxPricesState extends State<CheckboxPrices> {
-
   final TextEditingController _samePriceController = TextEditingController();
   final TextEditingController _mondayController = TextEditingController();
   final TextEditingController _tuesdayController = TextEditingController();
@@ -32,22 +32,18 @@ class CheckboxPricesState extends State<CheckboxPrices> {
   bool isCheckedSamePrice = false;
   bool isCheckedDiffPrice = false;
 
-  List<String> getPrices(){
+  List<String> getPrices() {
     List<String> prices = List.generate(7, (index) => '');
 
-    if(isCheckedFree){
-      
+    if (isCheckedFree) {
       for (int i = 0; i < prices.length; i++) {
         prices[i] = '0';
       }
-
-    }else if( isCheckedSamePrice){
-
+    } else if (isCheckedSamePrice) {
       for (int i = 0; i < prices.length; i++) {
         prices[i] = _samePriceController.text;
       }
-
-    }else{
+    } else {
       prices[0] = _mondayController.text;
       prices[1] = _tuesdayController.text;
       prices[2] = _wednesdayController.text;
@@ -64,22 +60,20 @@ class CheckboxPricesState extends State<CheckboxPrices> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
         Row(
           children: [
             Checkbox(
-              value: isCheckedFree,
-              checkColor: Colors.grey.shade900,
-              activeColor: Colors.transparent,
-              onChanged: (value){
-                setState(() {
-                  isCheckedFree= value ?? false;
-                  isCheckedDiffPrice= false;
-                  isCheckedSamePrice = false;
-                });
-              }
-            ),
-            const SizedBox(width: 8), 
+                value: isCheckedFree,
+                checkColor: Colors.grey.shade900,
+                activeColor: Colors.transparent,
+                onChanged: (value) {
+                  setState(() {
+                    isCheckedFree = value ?? false;
+                    isCheckedDiffPrice = false;
+                    isCheckedSamePrice = false;
+                  });
+                }),
+            const SizedBox(width: 8),
             Text(
               'Always free',
               style: TextStyle(
@@ -90,16 +84,14 @@ class CheckboxPricesState extends State<CheckboxPrices> {
             ),
           ],
         ),
-
         const SizedBox(height: 10),
-
         Row(
           children: [
             Checkbox(
               value: isCheckedSamePrice,
               checkColor: Colors.grey.shade900,
               activeColor: Colors.transparent,
-              onChanged: (value){
+              onChanged: (value) {
                 setState(() {
                   isCheckedSamePrice = value ?? false;
                   isCheckedFree = false;
@@ -107,7 +99,7 @@ class CheckboxPricesState extends State<CheckboxPrices> {
                 });
               },
             ),
-            const SizedBox(width: 8), 
+            const SizedBox(width: 8),
             Text(
               'Same price everyday',
               style: TextStyle(
@@ -118,25 +110,23 @@ class CheckboxPricesState extends State<CheckboxPrices> {
             ),
           ],
         ),
-
         Visibility(
           visible: isCheckedSamePrice,
-          child: FormTileSmall(
-            label: 'Set the price:',
-            description: '00.00',
+          child: NumberFormTile(
+            label: 'Price',
+            description: 'price',
             controller: _samePriceController,
+            maximumValue: 10000,
+            maxLength: 5,
           ),
         ),
-
-        const SizedBox(height: 10),
-
         Row(
           children: [
             Checkbox(
               value: isCheckedDiffPrice,
               checkColor: Colors.grey.shade900,
               activeColor: Colors.transparent,
-              onChanged: (value){
+              onChanged: (value) {
                 setState(() {
                   isCheckedDiffPrice = value ?? false;
                   isCheckedFree = false;
@@ -144,7 +134,7 @@ class CheckboxPricesState extends State<CheckboxPrices> {
                 });
               },
             ),
-            const SizedBox(width: 8), 
+            const SizedBox(width: 8),
             Text(
               'Specific prices',
               style: TextStyle(
@@ -155,58 +145,63 @@ class CheckboxPricesState extends State<CheckboxPrices> {
             ),
           ],
         ),
-
         Visibility(
-            visible: isCheckedDiffPrice,
-            child: Column(
-              children: [
-                FormTileSmall(
-                  label: 'Monday:',
-                  description: '00.00',
-                  controller: _mondayController,
-                ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Tuesday:',
-                  description: '00.00',
-                  controller: _tuesdayController,
-                ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Wednesday:',
-                  description: '00.00',
-                  controller: _wednesdayController,
-                ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Thursday:',
-                  description: '00.00',
-                  controller: _thursdayController,
-                ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Friday:',
-                  description: '00.00',
-                  controller: _fridayController,
-                ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Saturday:',
-                  description: '00.00',
-                  controller: _saturdayController,
-                ),
-                const SizedBox(height: 8),
-                FormTileSmall(
-                  label: 'Sunday:',
-                  description: '00.00',
-                  controller: _sundayController,
-                ),
-                const SizedBox(height: 8),
-              ],
-            ),
+          visible: isCheckedDiffPrice,
+          child: Column(
+            children: [
+              NumberFormTile(
+                label: 'Monday',
+                description: 'price',
+                controller: _mondayController,
+                maximumValue: 99999,
+                maxLength: 5,
+              ),
+              NumberFormTile(
+                label: 'Tuesday',
+                description: 'price',
+                controller: _tuesdayController,
+                maximumValue: 99999,
+                maxLength: 5,
+              ),
+              NumberFormTile(
+                label: 'Wednesday',
+                description: 'price',
+                controller: _wednesdayController,
+                maximumValue: 99999,
+                maxLength: 5,
+              ),
+              NumberFormTile(
+                label: 'Thursday',
+                description: 'price',
+                controller: _thursdayController,
+                maximumValue: 99999,
+                maxLength: 5,
+              ),
+              NumberFormTile(
+                label: 'Friday',
+                description: 'price',
+                controller: _fridayController,
+                maximumValue: 99999,
+                maxLength: 5,
+              ),
+              NumberFormTile(
+                label: 'Saturday',
+                description: 'price',
+                controller: _saturdayController,
+                maximumValue: 99999,
+                maxLength: 5,
+              ),
+              NumberFormTile(
+                label: 'Sunday',
+                description: 'price',
+                controller: _sundayController,
+                maximumValue: 99999,
+                maxLength: 5,
+              ),
+            ],
           ),
-
-        ],
+        ),
+      ],
     );
   }
 }

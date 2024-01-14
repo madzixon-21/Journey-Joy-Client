@@ -23,7 +23,7 @@ class TextFormTile extends StatelessWidget {
                 width: 8,
               ),
               SizedBox(
-                width: 100,
+                width: 110,
                 height: 50,
                 child: Text(
                   label,
@@ -36,10 +36,8 @@ class TextFormTile extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(width: 9),
-
               SizedBox(
-                width: 250,
+                width: 240,
                 child: TextFormField(
                   maxLines: 3,
                   minLines: 1,
@@ -71,7 +69,6 @@ class TextFormTile extends StatelessWidget {
               )
             ],
           ),
-          //const SizedBox(height: 2),
         ],
       ),
     );

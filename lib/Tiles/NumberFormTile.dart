@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -5,11 +7,15 @@ class NumberFormTile extends StatelessWidget {
   final String label;
   final String description;
   final TextEditingController controller;
+  final int maximumValue;
+  final int maxLength;
 
   const NumberFormTile(
       {required this.label,
       required this.description,
       required this.controller,
+      required this.maximumValue,
+      required this.maxLength,
       super.key});
 
   @override
@@ -24,8 +30,8 @@ class NumberFormTile extends StatelessWidget {
                 width: 8,
               ),
               SizedBox(
-                width: 100,
-                height: 70,
+                width: 110,
+                height: 50,
                 child: Text(
                   label,
                   style: TextStyle(
@@ -38,13 +44,13 @@ class NumberFormTile extends StatelessWidget {
               ),
               const SizedBox(width: 9),
               SizedBox(
-                width: 250,
+                width: 240,
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
                   ],
-                  maxLength: 4,
+                  maxLength: maxLength,
                   controller: controller,
                   decoration: InputDecoration(
                     hintText: 'Enter $description',
@@ -66,11 +72,11 @@ class NumberFormTile extends StatelessWidget {
                     if (value == null || value.isEmpty) {
                       return 'Please enter $description';
                     }
-                    else if (int.parse(value) > 1440){
-                      return 'Time should be less than 1440';
+                    else if (int.parse(value) > maximumValue){
+                      return '$description should be less than $maximumValue';
                     }
                     else if (int.parse(value) < 0){
-                      return 'Time should be positive';
+                      return '$description should be positive';
                     }
                     return null;
                   },
@@ -78,7 +84,6 @@ class NumberFormTile extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(height: 10),
         ],
       ),
     );

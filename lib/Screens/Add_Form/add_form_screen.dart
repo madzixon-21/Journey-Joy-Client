@@ -38,7 +38,7 @@ class AddFormScreenState extends State<AddFormScreen> {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: AddForm(),
+          child: AddForm(token: widget.token, tripId: widget.tripId,),
         ),
       ),
     );

@@ -1,13 +1,24 @@
+/// # AddForm
+/// ## Form screen used for collecting data about a personalized attraction.
+/// 
+/// Contains text fields for collecting attraction details and location data.
+/// Uses checkBoxPrices and chackBoxHours for collecting information about opening hours and prices.
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:journey_joy_client/Classes/Functions/add_attraction.dart';
+import 'package:journey_joy_client/Classes/attraction.dart';
+import 'package:journey_joy_client/Dialogs/error_dialog.dart';
 import 'package:journey_joy_client/Screens/Add_Form/checkboxes_hours.dart';
 import 'package:journey_joy_client/Screens/Add_Form/checkboxes_prices.dart';
-import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
 import 'package:journey_joy_client/Tiles/NumberFormTile.dart';
 import 'package:journey_joy_client/Tiles/TextFormTile.dart';
 
 class AddForm extends StatefulWidget {
-  const AddForm({super.key});
+  final String token;
+  final String tripId;
+
+  const AddForm({required this.token, required this.tripId, super.key});
 
   @override
   AddFormState createState() {
@@ -45,6 +56,7 @@ class AddFormState extends State<AddForm> {
 
   @override
   Widget build(BuildContext context) {
+    _timeController.text = '0';
     return Form(
       key: _formKey,
       child: Column(
@@ -140,8 +152,10 @@ class AddFormState extends State<AddForm> {
                   ),
                   NumberFormTile(
                     label: 'Time needed',
-                    description: 'time in minutes',
+                    description: 'Time',
                     controller: _timeController,
+                    maximumValue: 1440,
+                    maxLength: 4,
                   ),
                 ],
               )),
@@ -174,18 +188,18 @@ class AddFormState extends State<AddForm> {
                 children: [
                   const SizedBox(height: 10),
                   TextFormTile(
-                    label: 'Street:',
-                    description: 'Add street name',
+                    label: 'Street',
+                    description: 'street name',
                     controller: _street1Controller,
                   ),
                   TextFormTile(
-                    label: 'City:',
-                    description: 'Add city',
+                    label: 'City',
+                    description: 'city',
                     controller: _cityController,
                   ),
                   TextFormTile(
-                    label: 'Country:',
-                    description: 'Add country',
+                    label: 'Country',
+                    description: 'country',
                     controller: _countryController,
                   ),
                 ],
@@ -206,6 +220,31 @@ class AddFormState extends State<AddForm> {
           ),
           const SizedBox(height: 10),
           Container(
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(
+                color: Colors.grey.shade500,
+              ),
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: CheckboxHours(key: hoursKey),
+          ),
+          const SizedBox(height: 25),
+          SizedBox(
+            width: 300,
+            child: Text(
+              'Specify the prices',
+              style: TextStyle(
+                color: Colors.grey.shade900,
+                fontFamily: 'Lohit Tamil',
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 border: Border.all(
@@ -213,20 +252,71 @@ class AddFormState extends State<AddForm> {
                 ),
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: CheckboxHours(key: hoursKey),),
-
-
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: ElevatedButton(
+              child: CheckboxPrices(key: pricesKey)),
+          const SizedBox(height: 20),
+          Center(
+            child: TextButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
-                  );
+                  Address ad = Address(
+                      street1: _street1Controller.text,
+                      city: _cityController.text,
+                      state: '',
+                      country: _countryController.text,
+                      postalcode: '',
+                      address: '',
+                      phone: '',
+                      latitude: 0,
+                      longitude: 0);
+
+                  List<String> prices =
+                      pricesKey.currentState?.getPrices() ?? [];
+                  List<List<String>> openingHours =
+                      hoursKey.currentState?.getOpeningHours() ?? [];
+                  
+                  imageBytes = List.empty();
+
+                  AddAttractionAction()
+                      .add(
+                    _attractionNameController.text,
+                    ad,
+                    _descriptionController.text,
+                    imageBytes,
+                    _timeController.text,
+                    openingHours,
+                    prices,
+                    '',
+                    widget.tripId,
+                    widget.token,
+                  )
+                      .then((bool successful) {
+                    if (successful) {
+                      Navigator.of(context).pop();
+                    } else {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => const ErrorDialog(
+                            prop:
+                                "We couldn't add the attraction to your trip."),
+                      );
+                    }
+                  });
                 }
               },
-              child: const Text('Submit'),
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              child: Text(
+                'Add attraction',
+                style: TextStyle(
+                  color: Colors.grey.shade900,
+                  fontFamily: 'Lohit Tamil',
+                  letterSpacing: 2,
+                ),
+              ),
             ),
           ),
         ],
