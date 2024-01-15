@@ -2,6 +2,8 @@
 /// ## Form screen used for collecting data about a personalized trip.
 ///
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:journey_joy_client/Classes/Functions/create_trip.dart';
@@ -30,6 +32,25 @@ class AddTripFormState extends State<AddTripForm> {
     if (pickedFile != null) {
       imageBytes = await pickedFile.readAsBytes();
       _ifPictureAdded = 1;
+    }
+  }
+
+  Widget _buildSelectedImage() {
+    if (_ifPictureAdded == 1) {
+      return Container(
+        height: 70,
+        width: 70,
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: MemoryImage(Uint8List.fromList(imageBytes!)),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    } else {
+      return Container(); // Pusty kontener, gdy brak wybranego obrazu
     }
   }
 
@@ -152,51 +173,56 @@ class AddTripFormState extends State<AddTripForm> {
               const SizedBox(
                 height: 10,
               ),
-              Center(
-                child: Container(
-                  height: 40,
-                  width: 200,
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await getImage();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Center(child: Container()),
+                  Container(
+                    height: 50,
+                    width: 200,
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await getImage();
+                        setState(() {}); // Odśwież widok po wybraniu zdjęcia
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.add_a_photo_rounded,
+                            color: Colors.grey.shade900,
+                            size: 24,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Choose photo',
+                            style: TextStyle(
+                              color: Colors.grey.shade900,
+                              fontFamily: 'Lohit Tamil',
+                              letterSpacing: 2,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.add_a_photo_rounded,
-                          color: Colors.grey.shade900,
-                          size: 24,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Choose photo',
-                          style: TextStyle(
-                            color: Colors.grey.shade900,
-                            fontFamily: 'Lohit Tamil',
-                            letterSpacing: 2,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                ),
+                  Center(child: _buildSelectedImage()),
+                ],
               ),
               const SizedBox(
-                height: 25,
+                height: 30,
               ),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-
-                      if(_ifPictureAdded == 0) {
+                      if (_ifPictureAdded == 0) {
                         imageBytes = List.empty();
                       }
                       CreateTripAction()

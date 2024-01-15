@@ -3,7 +3,7 @@ import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Dialogs/add_attraction_dialog.dart';
 import 'package:journey_joy_client/Cubits/trip_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:go_router/go_router.dart';
 
 class AttractionTile extends StatelessWidget {
   const AttractionTile({
@@ -84,6 +84,7 @@ class PlusButton extends StatelessWidget {
 
 @override
   Widget build(BuildContext context) {
+    final heroTag = 'attractionHero_${attraction.locationId}';
     return SizedBox(
       width: 48, 
       height: 48, 
@@ -100,9 +101,8 @@ class PlusButton extends StatelessWidget {
               },
             ).then((result) {
               if (result == 'attractionAdded') {
-                context.read<TripsCubit>().fetch(token).then((_) {
-                  Navigator.pop(context);
-                });
+                context.read<TripsCubit>().fetch(token);
+                 Navigator.pop(context);
               }
             });
         },
@@ -120,6 +120,7 @@ class PlusButton extends StatelessWidget {
               Icons.add_rounded,
               color: Colors.grey.shade900,
               size: 16,
+              
             ),
           ],
         ),

@@ -183,68 +183,63 @@ class TripScreenState extends State<TripScreen> {
     );
   }
 
-  Widget buildAttractionsList(Trip trip) {
-    return Column(
-      children: [
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: trip.attractions.length,
-          itemBuilder: (context, index) {
-            return AddedAttractionTile(
-              attraction: trip.attractions[index],
-              tripId: trip.id,
-              token: widget.token,
-            );
-          },
-        ),
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              bool hasStartPoint =
-                  trip.attractions.any((attraction) => attraction.isStartPoint);
+Widget buildAttractionsList(Trip trip) {
+  return Column(
+    children: [
+      ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: trip.attractions.length,
+        itemBuilder: (context, index) {
+          return AddedAttractionTile(
+            attraction: trip.attractions[index],
+            tripId: trip.id,
+            token: widget.token,
+          );
+        },
+      ),
 
-              if (hasStartPoint) {
-                showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => CreateRouteDialog(
-                          token: widget.token,
-                          tripId: widget.tripId,
-                        )).then((result) {
-                  if (result == 'routeCreated') {
-                    context.read<TripsCubit>().fetch(widget.token);
-                    setState(() {
-                      isRoute = true;
-                    });
-                  }
-                });
-              } else {
-                showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => const ErrorDialog(
-                        prop:
-                            "Make sure to add your hotel accomodation and set it as a starting point of your trip."));
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-            child: Text(
-              'Find route',
-              style: TextStyle(
-                color: Colors.grey.shade900,
-                fontFamily: 'Lohit Tamil',
-                letterSpacing: 2,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+      Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      bool hasStartPoint = trip.attractions.any((attraction) => attraction.isStartPoint);
+      
+                      if (hasStartPoint) {
+                        showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => CreateRouteDialog(token: widget.token, tripId: widget.tripId,))
+                        .then((result){
+                          if (result == 'routeCreated') {
+                            context.read<TripsCubit>().fetch(widget.token);
+                            setState(() {
+                              isRoute = true;
+                            });
+                          }});
+                      } else {
+                        showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => const ErrorDialog(prop: "Make sure to add your hotel accomodation and set it as a starting point of your trip."));
+                       } 
+                     },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: Text('Find route',
+                        style: TextStyle(
+                          color: Colors.grey.shade900,
+                          fontFamily: 'Lohit Tamil',
+                          letterSpacing: 2,
+                        ),
+                      ),
+                  ),
+                ),
+      
+    ],
+  );
+}
 
   Widget buildRouteList(Trip trip) {
     return Column(
