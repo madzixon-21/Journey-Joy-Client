@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Classes/Functions/add_attraction.dart';
+import 'package:journey_joy_client/Dialogs/error_dialog.dart';
 
 class AddAttractionDialog extends StatelessWidget {
   AddAttractionDialog(
@@ -29,6 +30,8 @@ class AddAttractionDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     _nameController.text = attraction.name;
     _addressController.text = attraction.address.toString();
+    _descriptionController.text = 'TripAdvisor attraction';
+    _timeNeededController.text = '0';
 
     final _formKey = GlobalKey<FormState>();
 
@@ -232,11 +235,11 @@ class AddAttractionDialog extends StatelessWidget {
                           if (successful) {
                             Navigator.pop(context, 'attractionAdded');
                           } else {
-                            _nameController.text = attraction.name;
-                            _addressController.text =
-                                attraction.address.toString();
-                            _descriptionController.clear();
-                            _timeNeededController.clear();
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    const ErrorDialog(
+                                        prop: 'Attraction already exists in trip'));
                           }
                         });
                       }

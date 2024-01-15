@@ -13,7 +13,6 @@ import 'package:drag_and_drop_lists/drag_and_drop_list.dart';
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/trip.dart';
 import 'package:journey_joy_client/Dialogs/create_route_dialog.dart';
-import 'package:journey_joy_client/Screens/route_screen.dart';
 import 'package:journey_joy_client/main.dart';
 import 'package:journey_joy_client/Tiles/AddedAttractionTile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +49,7 @@ class TripScreenState extends State<TripScreen> {
         if (state is TripsData) {
           final trip = state.trips.firstWhere((t) => t.id == widget.tripId);
           if (trip.route.attractionsInOrder.isNotEmpty) isRoute = true;
-         // return DragHandleExample(trip: trip,);
+
           return buildTrip(trip, context);
         } else if (state is TripsLoading) {
           return Scaffold(
