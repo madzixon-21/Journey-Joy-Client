@@ -298,7 +298,7 @@ class AddFormState extends State<AddForm> {
                   )
                       .then((bool successful) {
                     if (successful) {
-                      context.read<TripsCubit>().fetch(widget.token).then((_)=> context.go('/user/${widget.token}/trip/${widget.tripId}'));
+                      context.read<TripsCubit>().fetch(widget.token).then((_)=> Navigator.pop(context));
                     } else {
                       showDialog<String>(
                         context: context,

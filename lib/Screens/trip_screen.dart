@@ -174,7 +174,7 @@ class TripScreenState extends State<TripScreen> {
        floatingActionButton: Builder(
           builder: (context) {
             return FloatingActionButton(
-              
+              heroTag: UniqueKey(),
               backgroundColor: const Color(0xFF9DC183),
               child: const Icon(
                 Icons.add,
