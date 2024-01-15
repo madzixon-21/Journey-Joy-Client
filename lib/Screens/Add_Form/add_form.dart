@@ -88,7 +88,10 @@ class AddFormState extends State<AddForm> {
   @override
   Widget build(BuildContext context) {
     _timeController.text = '0';
-    return Form(
+    bool isLoading = false;
+    return Stack(
+      children: [
+      Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -319,7 +322,9 @@ class AddFormState extends State<AddForm> {
                   if (_ifPictureAdded == 0) {
                     imageBytes = List.empty();
                   }
-
+                  setState(() {
+                    isLoading = true;
+                  });
                   AddAttractionAction()
                       .add(
                     _attractionNameController.text,
@@ -335,7 +340,11 @@ class AddFormState extends State<AddForm> {
                   )
                       .then((bool successful) {
                     if (successful) {
-                      context.read<TripsCubit>().fetch(widget.token).then((_)=> Navigator.pop(context));
+                      context.read<TripsCubit>().fetch(widget.token);
+                      setState(() {
+                        isLoading = false;
+                      });
+                      Navigator.pop(context);
                     } else {
                       showDialog<String>(
                         context: context,
@@ -365,6 +374,21 @@ class AddFormState extends State<AddForm> {
           ),
         ],
       ),
+    ),
+      
+      Visibility(
+        visible: isLoading,
+        child: Container(
+          color: Colors.black.withOpacity(0.5), 
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+        )
+        
+        
+      ],
     );
+
   }
 }

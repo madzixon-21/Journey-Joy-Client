@@ -58,6 +58,7 @@ class AddTripFormState extends State<AddTripForm> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Form(
       key: _formKey,
       child: Container(
@@ -225,6 +226,7 @@ class AddTripFormState extends State<AddTripForm> {
                       if (_ifPictureAdded == 0) {
                         imageBytes = List.empty();
                       }
+                      
                       CreateTripAction()
                           .create(
                         _nameController.text,
@@ -239,6 +241,7 @@ class AddTripFormState extends State<AddTripForm> {
                           _nameController.clear();
                           _descriptionController.clear();
                         }
+                        
                       });
                     }
                   },
@@ -263,5 +266,6 @@ class AddTripFormState extends State<AddTripForm> {
         ),
       ),
     );
+    
   }
 }

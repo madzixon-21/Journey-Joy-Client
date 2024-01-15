@@ -193,27 +193,7 @@ Widget buildAttractionsList(Trip trip) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.go('/user/${widget.token}/trip/${trip.id}/attraction');
-          },
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-            child: Text('Choose your hotel accomodation',
-              style: TextStyle(
-                color: Colors.grey.shade900,
-                fontFamily: 'Lohit Tamil',
-                letterSpacing: 2,
-              ),
-            ),
-        ),
-      ),
-
+      
       Padding(
         padding: const EdgeInsets.only(left: 12.0),
         child: Text(
