@@ -1,11 +1,11 @@
 /// # Trip screen
 /// ## Displays the details of the trip with the corresponding tripId
-/// 
+///
 /// The screen displays the trip picture, along with it's name and description in the top part.
 /// Below it shows the added attractions in two different ways.
 /// When the trip doesn't have a calculated route, the screen shows a list of attractions with the "Options"
-/// button which allows the user to edit or delete the attraction from the trip. 
-/// If the trip has a planned route, the screen displays the attractions in the right order, separating 
+/// button which allows the user to edit or delete the attraction from the trip.
+/// If the trip has a planned route, the screen displays the attractions in the right order, separating
 /// them into different days.
 
 import 'package:flutter/material.dart';
@@ -30,67 +30,70 @@ class TripScreen extends StatefulWidget {
 
 class TripScreenState extends State<TripScreen> {
   bool isRoute = false;
-  
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TripsCubit, TripsState>(
       builder: (context, state) {
         if (state is TripsData) {
           final trip = state.trips.firstWhere((t) => t.id == widget.tripId);
-          if(trip.route.attractionsInOrder.isNotEmpty) isRoute = true;
+          if (trip.route.attractionsInOrder.isNotEmpty) isRoute = true;
 
           return buildTrip(trip, context);
         } else if (state is TripsLoading) {
           return Scaffold(
-           appBar: AppBar(backgroundColor: const Color.fromARGB(255, 219, 235, 199),
-          title: const Text('Trip details',
-          style: TextStyle(
-            color:  Colors.black,
-            fontFamily: 'Lohit Tamil',
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2,
+            appBar: AppBar(
+              backgroundColor: const Color.fromARGB(255, 219, 235, 199),
+              title: const Text(
+                'Trip details',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Lohit Tamil',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                ),
+              ),
             ),
-          ),
-        ),
-          body:Container(
-             decoration: const BoxDecoration(
+            body: Container(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/trip_background.png'),
                   fit: BoxFit.cover,
                 ),
               ),
-            child: const Center(
-              child: CircularProgressIndicator(),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
-          ),
           );
         } else if (state is TripsError) {
           String error = state.message;
           return Center(
-                  child: Text(
-                    'Error: $error',
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                );
-        }else{
+            child: Text(
+              'Error: $error',
+              style: const TextStyle(color: Colors.red),
+            ),
+          );
+        } else {
           return Container();
         }
       },
     );
   }
 
-
   Widget buildTrip(Trip trip, BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: const Color.fromARGB(255, 219, 235, 199),
-        title: const Text('Trip details',
-        style: TextStyle(
-          color:  Colors.black,
-          fontFamily: 'Lohit Tamil',
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 2,
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 219, 235, 199),
+        title: const Text(
+          'Trip details',
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Lohit Tamil',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 2,
           ),
         ),
       ),
@@ -115,17 +118,18 @@ class TripScreenState extends State<TripScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
                         image: trip.picture.isNotEmpty
-                          ? DecorationImage(
-                              image: MemoryImage(trip.picture),
-                              fit: BoxFit.cover,
-                            )
-                          : null,   
+                            ? DecorationImage(
+                                image: MemoryImage(trip.picture),
+                                fit: BoxFit.cover,
+                              )
+                            : const DecorationImage(
+                                image: AssetImage('assets/default_pic.png'),
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
-      
-                    const SizedBox(width: 16), 
-      
-                     Expanded(
+                    const SizedBox(width: 16),
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -155,15 +159,8 @@ class TripScreenState extends State<TripScreen> {
                   ],
                 ),
               ),
-              
               const SizedBox(height: 16),
-
-               isRoute
-                ? buildRouteList(trip)
-                : buildAttractionsList(trip),
-        
-                
-      
+              isRoute ? buildRouteList(trip) : buildAttractionsList(trip),
               const SizedBox(height: 20),
             ],
           ),
@@ -183,10 +180,9 @@ class TripScreenState extends State<TripScreen> {
               ),
               onPressed: () {
                 context.go('/user/${widget.token}/trip/${trip.id}/attraction');
-              }
-            );
-          },
-        ),
+              });
+        },
+      ),
     );
   }
 
@@ -226,8 +222,8 @@ Widget buildAttractionsList(Trip trip) {
                         showDialog<String>(
                         context: context,
                         builder: (BuildContext context) => const ErrorDialog(prop: "Make sure to add your hotel accomodation and set it as a starting point of your trip."));
-                      } 
-                    },
+                       } 
+                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -248,57 +244,64 @@ Widget buildAttractionsList(Trip trip) {
   );
 }
 
-Widget buildRouteList(Trip trip) {
-  return Column(
-    children: [
-      ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: trip.route.attractionsInOrder.length,
-        itemBuilder: (context, dayIndex) {
-          if( trip.route.attractionsInOrder[dayIndex].isNotEmpty){
-            int weekDay = (trip.route.startDay + dayIndex - 1) % 7 + 1;
-            return DayTile( weekDay: weekDay, attractions: trip.attractions, attractionIds: trip.route.attractionsInOrder[dayIndex], dayNumber: dayIndex+1, trip: trip, token: widget.token);
-          }else{return null;}
-        },
-      ),
-      
-
-      ElevatedButton(
-        onPressed: () {
-          RemoveRouteAction().delete(widget.tripId, widget.token).then((http.Response? response){
-            if(response != null){
-              if(response.statusCode == 200){
-                setState(() {
-                  isRoute = false;
-                });
-                context.read<TripsCubit>().fetch(widget.token);
-              }else{
-                showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => ErrorDialog(prop: response.body));
-              }
+  Widget buildRouteList(Trip trip) {
+    return Column(
+      children: [
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: trip.route.attractionsInOrder.length,
+          itemBuilder: (context, dayIndex) {
+            if (trip.route.attractionsInOrder[dayIndex].isNotEmpty) {
+              int weekDay = (trip.route.startDay + dayIndex - 1) % 7 + 1;
+              return DayTile(
+                  weekDay: weekDay,
+                  attractions: trip.attractions,
+                  attractionIds: trip.route.attractionsInOrder[dayIndex],
+                  dayNumber: dayIndex + 1,
+                  trip: trip,
+                  token: widget.token);
+            } else {
+              return null;
             }
-          });
-        },
-        style: ElevatedButton.styleFrom(
+          },
+        ),
+        ElevatedButton(
+          onPressed: () {
+            RemoveRouteAction()
+                .delete(widget.tripId, widget.token)
+                .then((http.Response? response) {
+              if (response != null) {
+                if (response.statusCode == 200) {
+                  setState(() {
+                    isRoute = false;
+                  });
+                  context.read<TripsCubit>().fetch(widget.token);
+                } else {
+                  showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          ErrorDialog(prop: response.body));
+                }
+              }
+            });
+          },
+          style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),
-          child: Text('Remove route',
+          child: Text(
+            'Remove route',
             style: TextStyle(
               color: Colors.grey.shade900,
               fontFamily: 'Lohit Tamil',
               letterSpacing: 2,
             ),
           ),
-      ),
-                
-      
-    ],
-  );
-
-}
+        ),
+      ],
+    );
+  }
 }
