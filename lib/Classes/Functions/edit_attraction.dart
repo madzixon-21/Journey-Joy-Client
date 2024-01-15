@@ -52,7 +52,7 @@ class EditAttractionAction{
     EditAttractionRequest request = EditAttractionRequest(name, address, description, photo, timeNeeded, openingHours, prices, attractionId);
     
     final response = await http.post(
-      Uri.parse('https://journeyjoy-app.azurewebsites.net/trips/$tripId/$attractionId'), 
+      Uri.parse('https://journeyjoy-app.azurewebsites.net/trips/edit/$tripId/$attractionId'), 
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',

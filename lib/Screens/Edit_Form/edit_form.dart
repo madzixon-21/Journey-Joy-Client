@@ -358,7 +358,7 @@ class EditFormState extends State<EditForm> {
                           _timeController.text,
                           openingHours,
                           prices,
-                          '',
+                          widget.attraction.tripAdvisorLocationId,
                           widget.tripId,
                           widget.token,
                         )
@@ -368,6 +368,7 @@ class EditFormState extends State<EditForm> {
                                 .read<TripsCubit>()
                                 .fetch(widget.token)
                                 .then((_) {
+                              Navigator.pop(context);
                               Navigator.pop(context);
                             });
                           } else {

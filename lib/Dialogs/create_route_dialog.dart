@@ -179,7 +179,8 @@ class CreateRouteDialogState extends State<CreateRouteDialog> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         int startDay = convertDay(dropdownValue);
-                    
+                        print("token:${widget.token}");
+                        print("token:${widget.tripId}");
                         CreateRoute()
                             .create(int.parse(_numDaysController.text), startDay,
                                 widget.tripId, widget.token)

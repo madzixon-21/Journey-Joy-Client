@@ -54,6 +54,9 @@ class AttractionScreenState extends State<AttractionScreen> {
                 letterSpacing: 1.5,
               ),
               controller: _searchController,
+              onSubmitted: (String value) {
+                context.read<AttractionsCubit>().fetch(value, widget.token);
+              },
               decoration: InputDecoration(
                 hintText: 'Search...',
                 hintStyle: const TextStyle(

@@ -16,6 +16,7 @@ class Trip{
     final Uint8List picture;
     final List<AttractionToAdd> attractions;
     final Route route;
+    final List<String> attractionsNotOnRoute;
 
     Trip({
       required this.id,
@@ -25,6 +26,7 @@ class Trip{
       required this.picture,
       required this.attractions,
       required this.route,
+      required this.attractionsNotOnRoute,
     });
 
   factory Trip.fromJson(Map<String, dynamic> json) {
@@ -36,10 +38,15 @@ class Trip{
       picture: json['picture'] != null
           ? base64Decode(json['picture'])
           : Uint8List(0),
-       attractions: (json['attractions'] as List<dynamic>?)
+      attractions: (json['attractions'] as List<dynamic>?)
         ?.map((attractionJson) => AttractionToAdd.fromJson(attractionJson))
         .toList() ??
         [],
+      attractionsNotOnRoute: (json['attractionsNotOnRoute'] as List<dynamic>?)
+        ?.map((attractionJson) => attractionJson.toString())
+        .toList() ??
+        [],
+
         route: Route.fromJson(json['route'] ?? {}),
     );
   }
