@@ -4,6 +4,8 @@
 /// Contains text fields for collecting attraction details and location data.
 /// Uses checkBoxPrices and chackBoxHours for collecting information about opening hours and prices.
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:journey_joy_client/Classes/Functions/add_attraction.dart';
@@ -49,6 +51,30 @@ class AddFormState extends State<AddForm> {
     if (pickedFile != null) {
       imageBytes = await pickedFile.readAsBytes();
       _ifPictureAdded = 1;
+    }
+  }
+
+  Widget _buildSelectedImage() {
+    if (_ifPictureAdded == 1) {
+      return Row(
+        children: [
+          const SizedBox(width: 15,),
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: MemoryImage(Uint8List.fromList(imageBytes!)),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Container();
     }
   }
 
@@ -111,7 +137,7 @@ class AddFormState extends State<AddForm> {
                           width: 8,
                         ),
                         SizedBox(
-                          width: 125,
+                          width: 120,
                           child: Text(
                             'Picture',
                             style: TextStyle(
@@ -122,35 +148,46 @@ class AddFormState extends State<AddForm> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 19),
-                        ElevatedButton(
-                          onPressed: () async {
-                            await getImage();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.add_a_photo_rounded,
-                                color: Colors.grey.shade900,
-                                size: 24,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Choose photo',
-                                style: TextStyle(
-                                  color: Colors.grey.shade900,
-                                  fontFamily: 'Lohit Tamil',
-                                  letterSpacing: 2,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              height: 80,
+                              alignment: Alignment.center,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await getImage();
+                                  setState(() {});
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(70, 60),
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13.0),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.add_a_photo_rounded,
+                                      color: Colors.grey.shade900,
+                                      size: 24,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      'Choose \n photo',
+                                      style: TextStyle(
+                                        color: Colors.grey.shade900,
+                                        fontFamily: 'Lohit Tamil',
+                                        letterSpacing: 2,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Center(child: _buildSelectedImage()),
+                          ],
                         ),
                       ],
                     ),
@@ -298,7 +335,9 @@ class AddFormState extends State<AddForm> {
                   )
                       .then((bool successful) {
                     if (successful) {
-                      context.read<TripsCubit>().fetch(widget.token).then((_)=> context.go('/user/${widget.token}/trip/${widget.tripId}'));
+                      context.read<TripsCubit>().fetch(widget.token).then((_) =>
+                          context.go(
+                              '/user/${widget.token}/trip/${widget.tripId}'));
                     } else {
                       showDialog<String>(
                         context: context,

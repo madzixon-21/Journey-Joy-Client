@@ -4,6 +4,8 @@
 /// Contains text fields for collecting attraction details and location data.
 /// Uses editCheckBoxPrices and editCheckBoxHours for collecting information about opening hours and prices.
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Tiles/NumberFormTile.dart';
 import 'package:journey_joy_client/Tiles/TextFormTile.dart';
@@ -51,7 +53,6 @@ class EditFormState extends State<EditForm> {
     if (pickedFile != null) {
       imageBytes = await pickedFile.readAsBytes();
       _ifPictureAdded = 1;
-
     }
   }
 
@@ -59,6 +60,32 @@ class EditFormState extends State<EditForm> {
       GlobalKey<EditCheckboxPricesState>();
   final GlobalKey<EditCheckboxHoursState> hoursKey =
       GlobalKey<EditCheckboxHoursState>();
+
+  Widget _buildSelectedImage() {
+    if (_ifPictureAdded == 1) {
+      return Row(
+        children: [
+          const SizedBox(
+            width: 15,
+          ),
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: MemoryImage(Uint8List.fromList(imageBytes!)),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +165,7 @@ class EditFormState extends State<EditForm> {
                                 width: 8,
                               ),
                               SizedBox(
-                                width: 125,
+                                width: 120,
                                 child: Text(
                                   'Picture',
                                   style: TextStyle(
@@ -149,35 +176,48 @@ class EditFormState extends State<EditForm> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 19),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  await getImage();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.add_a_photo_rounded,
-                                      color: Colors.grey.shade900,
-                                      size: 24,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Choose photo',
-                                      style: TextStyle(
-                                        color: Colors.grey.shade900,
-                                        fontFamily: 'Lohit Tamil',
-                                        letterSpacing: 2,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    height: 80,
+                                    alignment: Alignment.center,
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        await getImage();
+                                        setState(() {});
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize: const Size(70, 60),
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(13.0),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.add_a_photo_rounded,
+                                            color: Colors.grey.shade900,
+                                            size: 24,
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            'Choose \n photo',
+                                            style: TextStyle(
+                                              color: Colors.grey.shade900,
+                                              fontFamily: 'Lohit Tamil',
+                                              letterSpacing: 2,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Center(child: _buildSelectedImage()),
+                                ],
                               ),
                             ],
                           ),
@@ -290,9 +330,9 @@ class EditFormState extends State<EditForm> {
                   child: TextButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        if(_ifPictureAdded == 0) {
-                        imageBytes = List.empty();
-                      }
+                        if (_ifPictureAdded == 0) {
+                          imageBytes = List.empty();
+                        }
                         Address ad = Address(
                             street1: _street1Controller.text,
                             city: _cityController.text,
