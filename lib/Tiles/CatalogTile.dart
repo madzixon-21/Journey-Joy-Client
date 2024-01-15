@@ -20,7 +20,9 @@ class CatalogTile extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Container(
+            ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(10.0)),
+            child: Container(
             width: 170,
             height: 150,
             decoration: BoxDecoration(
@@ -36,6 +38,7 @@ class CatalogTile extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
           ),
+            ),
             const SizedBox(height: 25),
             Text(
               trip.name,

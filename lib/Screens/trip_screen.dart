@@ -9,8 +9,10 @@
 /// them into different days.
 
 import 'package:flutter/material.dart';
+import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Classes/trip.dart';
 import 'package:journey_joy_client/Dialogs/create_route_dialog.dart';
+import 'package:journey_joy_client/Tiles/RouteTile.dart';
 import 'package:journey_joy_client/main.dart';
 import 'package:journey_joy_client/Tiles/AddedAttractionTile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -161,27 +163,6 @@ class TripScreenState extends State<TripScreen> {
                 ),
               ),
 
-
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    
-                    },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    child: Text('Choose your hotel accomodation',
-                      style: TextStyle(
-                        color: Colors.grey.shade900,
-                        fontFamily: 'Lohit Tamil',
-                        letterSpacing: 2,
-                      ),
-                    ),
-                ),
-              ),
               const SizedBox(height: 16),
               isRoute ? buildRouteList(trip) : buildAttractionsList(trip),
               const SizedBox(height: 20),
@@ -212,6 +193,27 @@ Widget buildAttractionsList(Trip trip) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      Center(
+        child: ElevatedButton(
+          onPressed: () {
+            context.go('/user/${widget.token}/trip/${trip.id}/attraction');
+          },
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            child: Text('Choose your hotel accomodation',
+              style: TextStyle(
+                color: Colors.grey.shade900,
+                fontFamily: 'Lohit Tamil',
+                letterSpacing: 2,
+              ),
+            ),
+        ),
+      ),
+
       Padding(
         padding: const EdgeInsets.only(left: 12.0),
         child: Text(
@@ -300,8 +302,35 @@ Widget buildAttractionsList(Trip trip) {
 }
 
   Widget buildRouteList(Trip trip) {
+    AttractionToAdd startPoint = trip.attractions.firstWhere((attraction) => attraction.isStartPoint);
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Text(
+            "Your starting point is:",
+            style: TextStyle(
+              color: Colors.grey.shade900,
+              fontFamily: 'Lohit Tamil',
+              fontSize: 15,
+              letterSpacing: 2,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+
+        RouteTile(
+          day: 0, 
+          attraction: startPoint, 
+          tripId: widget.tripId, 
+          token: widget.token,
+          showHours: true
+        ),
+
+        const SizedBox(height: 30,),
+
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -321,38 +350,72 @@ Widget buildAttractionsList(Trip trip) {
             }
           },
         ),
-        ElevatedButton(
-          onPressed: () {
-            RemoveRouteAction()
-                .delete(widget.tripId, widget.token)
-                .then((http.Response? response) {
-              if (response != null) {
-                if (response.statusCode == 200) {
-                  setState(() {
-                    isRoute = false;
-                  });
-                  context.read<TripsCubit>().fetch(widget.token);
-                } else {
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          ErrorDialog(prop: response.body));
-                }
-              }
-            });
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+
+        Padding(
+        padding: const EdgeInsets.only(left: 12.0),
+        child: Text(
+          "Attractions that didn't fit the route:",
+          style: TextStyle(
+            color: Colors.grey.shade900,
+            fontFamily: 'Lohit Tamil',
+            fontSize: 15,
+            letterSpacing: 2,
+            fontWeight: FontWeight.bold,
           ),
-          child: Text(
-            'Remove route',
-            style: TextStyle(
-              color: Colors.grey.shade900,
-              fontFamily: 'Lohit Tamil',
-              letterSpacing: 2,
+        ),
+      ),
+
+        ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: trip.attractionsNotOnRoute.length,
+        itemBuilder: (context, index) {
+          return RouteTile(
+            day: 0,
+            attraction: trip.attractions.firstWhere(
+              (attraction) => attraction.tripAdvisorLocationId == trip.attractionsNotOnRoute[index],
+            ),
+            tripId: trip.id,
+            token: widget.token,
+            showHours: true,
+          );
+        },
+      ),
+
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              RemoveRouteAction()
+                  .delete(widget.tripId, widget.token)
+                  .then((http.Response? response) {
+                if (response != null) {
+                  if (response.statusCode == 200) {
+                    setState(() {
+                      isRoute = false;
+                    });
+                    context.read<TripsCubit>().fetch(widget.token);
+                  } else {
+                    showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            ErrorDialog(prop: response.body));
+                  }
+                }
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            child: Text(
+              'Remove route',
+              style: TextStyle(
+                color: Colors.grey.shade900,
+                fontFamily: 'Lohit Tamil',
+                letterSpacing: 2,
+              ),
             ),
           ),
         ),

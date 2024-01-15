@@ -92,110 +92,111 @@ class CatalogScreenState extends State<CatalogScreen> {
                 }
 
                 return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, 
-                    crossAxisSpacing: 8.0, 
-                    mainAxisSpacing: 8.0, 
-                  ),
-                  itemCount: trips.length,
-
-                  itemBuilder: (_, i) {
-                    final trip = trips[i];
-                    BuildContext catalogContext = context;
-
-                    return GestureDetector(
-                      onLongPress: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              backgroundColor: Colors.white,
-                              title: const Text('Choose Action',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'Lohit Tamil')),
-                              content: const Text('Do you want to delete or edit this trip?',
-                                style: TextStyle(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, 
+                      crossAxisSpacing: 8.0, 
+                      mainAxisSpacing: 8.0, 
+                    ),
+                    itemCount: trips.length,
+                
+                    itemBuilder: (_, i) {
+                      final trip = trips[i];
+                      BuildContext catalogContext = context;
+                
+                      return GestureDetector(
+                        onLongPress: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: Colors.white,
+                                title: const Text('Choose Action',
+                                  style: TextStyle(
                                     color: Colors.black,
-                                    fontFamily: 'Lohit Tamil')
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          backgroundColor: Colors.white,
-                                          title: const Text('Confirm Delete',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontFamily: 'Lohit Tamil')),
-                                          content: const Text('Are you sure you want to delete this trip?',
-                                            style: TextStyle(
+                                    fontFamily: 'Lohit Tamil')),
+                                content: const Text('Do you want to delete or edit this trip?',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Lohit Tamil')
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            backgroundColor: Colors.white,
+                                            title: const Text('Confirm Delete',
+                                              style: TextStyle(
                                                 color: Colors.black,
                                                 fontFamily: 'Lohit Tamil')),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context); 
-                                              },
-                                              child: const Text('Cancel',
-                                                style: TextStyle(color: Color.fromARGB(255, 124, 148, 106), fontFamily: 'Lohit Tamil')),
-                                                ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context); 
-                                                catalogContext.read<TripsCubit>().removeTrip(trip.id, widget.token);
-                                              },
-                                              child: const Text('Delete', 
-                                                style: TextStyle(color: Color.fromARGB(255, 124, 148, 106), fontFamily: 'Lohit Tamil'),),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: const Text('Delete', 
-                                    style: TextStyle(color: Color.fromARGB(255, 124, 148, 106), fontFamily: 'Lohit Tamil'),),
-                                ),
-                                  
-                                TextButton(
-                                  onPressed: () {
-                                    showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) => EditTripDialog(token: widget.token, tripId: trip.id,),
-                                      ).then((result){
-                                        if (result == 'tripEdited') {
-                                          Navigator.pop(context);
-                                          context.read<TripsCubit>().fetch(widget.token);
+                                            content: const Text('Are you sure you want to delete this trip?',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontFamily: 'Lohit Tamil')),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context); 
+                                                },
+                                                child: const Text('Cancel',
+                                                  style: TextStyle(color: Color.fromARGB(255, 124, 148, 106), fontFamily: 'Lohit Tamil')),
+                                                  ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context); 
+                                                  catalogContext.read<TripsCubit>().removeTrip(trip.id, widget.token);
+                                                },
+                                                child: const Text('Delete', 
+                                                  style: TextStyle(color: Color.fromARGB(255, 124, 148, 106), fontFamily: 'Lohit Tamil'),),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: const Text('Delete', 
+                                      style: TextStyle(color: Color.fromARGB(255, 124, 148, 106), fontFamily: 'Lohit Tamil'),),
+                                  ),
+                                    
+                                  TextButton(
+                                    onPressed: () {
+                                      showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) => EditTripDialog(token: widget.token, tripId: trip.id,),
+                                        ).then((result){
+                                          if (result == 'tripEdited') {
+                                            Navigator.pop(context);
+                                            context.read<TripsCubit>().fetch(widget.token);
+                                          }
                                         }
-                                      }
-                                  );
-                                  },
-                                  child: const Text('Edit', 
-                                    style: TextStyle(color: Color.fromARGB(255, 124, 148, 106), fontFamily: 'Lohit Tamil'),),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }, 
-                        
-                      onTap: (){
-                        context.go('/user/${widget.token}/trip/${trip.id}');
-                      },
-                      child: Center(
-                      child: SizedBox(
-                        width: 170,
-                        height: 240,
-                        child: CatalogTile(trip: trip),
-                      ),
-                    )
-                  );
-                    
-                  },
+                                    );
+                                    },
+                                    child: const Text('Edit', 
+                                      style: TextStyle(color: Color.fromARGB(255, 124, 148, 106), fontFamily: 'Lohit Tamil'),),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }, 
+                          
+                        onTap: (){
+                          context.go('/user/${widget.token}/trip/${trip.id}');
+                        },
+                        child: Center(
+                        child: SizedBox(
+                          width: 170,
+                          height: 240,
+                          child: CatalogTile(trip: trip),
+                        ),
+                      )
+                    );
+                      
+                    },
+         
                 );
               case TripsError:
                 final errorMessage = (currentState as TripsError).message;

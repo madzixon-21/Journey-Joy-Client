@@ -111,6 +111,7 @@ class DayTile extends StatelessWidget {
                 ),
                 tripId: trip.id, 
                 token: token,
+                showHours: false,
               ),),
             child: RouteTile(
               day: weekDay,
@@ -119,6 +120,7 @@ class DayTile extends StatelessWidget {
               ),
               tripId: trip.id, 
               token: token,
+              showHours: false,
             ),
           ),
         

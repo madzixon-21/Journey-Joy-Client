@@ -84,7 +84,6 @@ class PlusButton extends StatelessWidget {
 
 @override
   Widget build(BuildContext context) {
-    final heroTag = 'attractionHero_${attraction.locationId}';
     return SizedBox(
       width: 48, 
       height: 48, 

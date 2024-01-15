@@ -6,6 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:journey_joy_client/Classes/Functions/signin.dart';
+import 'package:journey_joy_client/Dialogs/created_account_dialog.dart';
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
 
 class SignInForm extends StatefulWidget {
@@ -174,7 +175,7 @@ class SignInFormState extends State<SignInForm> {
                 },
               ),
               const SizedBox(
-                height: 10,
+                height: 25,
               ),
               TextFormField(
                 key: const Key('confirmPasswordTextField'),
@@ -233,6 +234,11 @@ class SignInFormState extends State<SignInForm> {
                           if (response != null) {
                             if (response.statusCode == 200) {
                               Navigator.pop(context);
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    CreatedAccountDialog(nickname: _sInicknameController.text),
+                              );
                             } else {
                               _sIpasswordController.clear();
                               _sIpasswordController2.clear();

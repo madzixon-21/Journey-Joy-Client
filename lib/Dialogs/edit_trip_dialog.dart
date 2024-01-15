@@ -102,7 +102,7 @@ class EditTripDialogState extends State<EditTripDialog> {
                     letterSpacing: 2,
                   ),
                   controller: _nameController,
-                  maxLength: 50,
+                  maxLength: 14,
                   maxLines: 3,
                   minLines: 1,
                   decoration: InputDecoration(

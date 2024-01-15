@@ -1,14 +1,10 @@
-/// # Error Dialog
-/// ## Displayed after validation errors and in case of http response with status code 400 
-/// 
-/// Displays the text "Sometginf went wrong!" and the error message.
 
 import 'package:flutter/material.dart';
 
-class ErrorDialog extends StatelessWidget {
+class CreatedAccountDialog extends StatelessWidget {
 
-  const ErrorDialog({required this.prop, super.key});
-  final String prop;
+  const CreatedAccountDialog({required this.nickname, super.key});
+  final String nickname;
   
   @override
   Widget build(BuildContext context) {
@@ -28,7 +24,7 @@ class ErrorDialog extends StatelessWidget {
             const SizedBox(height: 30),
 
             Center(
-            child: Text('Something went wrong!',
+            child: Text('Welcome $nickname!',
               style: TextStyle(
                 color: Colors.grey.shade900,
                 fontFamily: 'Lohit Tamil',
@@ -44,7 +40,7 @@ class ErrorDialog extends StatelessWidget {
             Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(prop,
+              child: Text("Your registration is now complete.",
                 style: TextStyle(
                   color: Colors.grey.shade900,
                   fontFamily: 'Lohit Tamil',

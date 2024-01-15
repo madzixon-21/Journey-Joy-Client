@@ -9,12 +9,14 @@ class RouteTile extends StatelessWidget {
     required this.attraction,
     required this.tripId,
     required this.token,
+    required this.showHours,
   });
 
   final AttractionToAdd attraction;
   final String tripId;
   final String token;
   final int day;
+  final bool showHours;
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +88,9 @@ class RouteTile extends StatelessWidget {
                     ),
 
                   const SizedBox(height: 8),
-                  
-                  Text("Enter attraction between: \n $visitingHours",
+                  Visibility(
+                    visible: !showHours,
+                    child: Text("Enter attraction between: \n $visitingHours",
                       style: TextStyle(
                         color: Colors.grey.shade900,
                         fontSize: 13,
@@ -97,6 +100,8 @@ class RouteTile extends StatelessWidget {
                         letterSpacing: 1,
                       ),
                     ),
+                    )
+                  
                 ],
               ),
             ),
