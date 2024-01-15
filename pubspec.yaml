@@ -71,6 +71,8 @@ flutter:
   - assets/small_dialog_background.png
   - assets/catalog_background.png
   - assets/trip_background.png
+  - assets/default_pic.png
+
 
   fonts:
     - family: Satisfy

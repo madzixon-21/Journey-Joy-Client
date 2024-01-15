@@ -141,7 +141,7 @@ class AttractionScreenState extends State<AttractionScreen> {
 
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
-              
+              heroTag: UniqueKey(),
               backgroundColor: const Color.fromARGB(255, 224, 245, 210),
               child: const Icon(
                 Icons.add_location_alt_outlined,
