@@ -98,7 +98,7 @@ class CatalogScreenState extends State<CatalogScreen> {
                       mainAxisSpacing: 8.0, 
                     ),
                     itemCount: trips.length,
-                
+                    padding:const EdgeInsets.only(top:20),
                     itemBuilder: (_, i) {
                       final trip = trips[i];
                       BuildContext catalogContext = context;

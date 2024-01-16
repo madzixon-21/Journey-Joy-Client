@@ -156,11 +156,10 @@ class MinusButton extends StatelessWidget {
                                 if (response != null) {
                                   if(response.statusCode == 200)
                                   {
-                                    context.read<TripsCubit>().fetch(token).then((_) {
-                                      Navigator.pop(context);
-                                    });
+                                    Navigator.pop(context);
+                                    context.read<TripsCubit>().fetch(token);
                                   }else {
-                                    print(response.body);
+                                    Navigator.pop(context);
                                     showDialog<String>(
                                       context: context,
                                       builder: (BuildContext context) => ErrorDialog(prop: response.body),
@@ -204,9 +203,8 @@ class MinusButton extends StatelessWidget {
                     SetStartPoint().patch(tripId, attraction.tripAdvisorLocationId, token).then((http.Response? response){
                       if(response != null){
                         if(response.statusCode == 200){
-                          context.read<TripsCubit>().fetch(token).then((_) {
-                            Navigator.pop(context);
-                          });
+                          context.read<TripsCubit>().fetch(token);
+                          Navigator.pop(context);
                         }else {
                           showDialog<String>(
                             context: context,
@@ -215,8 +213,6 @@ class MinusButton extends StatelessWidget {
                         }
                       }
                     });
-                
-                  context.read<TripsCubit>().fetch(token);
                 },
                 child: const Text('Set as start point', 
                   style: TextStyle(color: Color.fromARGB(255, 124, 148, 106), fontFamily: 'Lohit Tamil'),),

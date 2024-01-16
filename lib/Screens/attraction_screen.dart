@@ -92,7 +92,7 @@ class AttractionScreenState extends State<AttractionScreen> {
                   child: CircularProgressIndicator(),
                 );
             }
-
+        print(widget.token);
             switch (currentState.runtimeType) {
               case AttractionsLoading():
                 return const Center(

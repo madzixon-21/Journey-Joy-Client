@@ -17,7 +17,6 @@ import 'package:journey_joy_client/Tiles/NumberFormTile.dart';
 import 'package:journey_joy_client/Tiles/TextFormTile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_joy_client/Cubits/trip_cubit.dart';
-import 'package:go_router/go_router.dart';
 
 class AddForm extends StatefulWidget {
   final String token;
@@ -84,13 +83,15 @@ class AddFormState extends State<AddForm> {
       GlobalKey<CheckboxHoursState>();
 
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     _timeController.text = '0';
-    bool isLoading = false;
+    
     return Stack(
       children: [
+
       Form(
       key: _formKey,
       child: Column(
@@ -375,18 +376,21 @@ class AddFormState extends State<AddForm> {
         ],
       ),
     ),
-      
+    
+          
       Visibility(
         visible: isLoading,
         child: Container(
-          color: Colors.black.withOpacity(0.5), 
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: Colors.transparent, 
           child: const Center(
             child: CircularProgressIndicator(),
           ),
         ),
-        )
-        
-        
+        ),
+      
+
       ],
     );
 

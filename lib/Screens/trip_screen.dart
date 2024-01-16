@@ -253,7 +253,6 @@ Widget buildAttractionsList(Trip trip) {
                   setState(() {
                     isRoute = true;
                   });
-                  print(trip.attractionsNotOnRoute.toString());
                 }});
             } else {
               showDialog<String>(
@@ -283,7 +282,11 @@ Widget buildAttractionsList(Trip trip) {
 
   Widget buildRouteList(Trip trip) {
     AttractionToAdd startPoint = trip.attractions.firstWhere((attraction) => attraction.isStartPoint);
-
+    bool notOnRoute = false;
+    if( trip.attractionsNotOnRoute.isNotEmpty)
+    {
+      notOnRoute = true;
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -331,7 +334,9 @@ Widget buildAttractionsList(Trip trip) {
           },
         ),
 
-        Padding(
+      Visibility(
+        visible: notOnRoute,
+        child: Padding(
         padding: const EdgeInsets.only(left: 12.0),
         child: Text(
           "Attractions that didn't fit the route:",
@@ -343,6 +348,7 @@ Widget buildAttractionsList(Trip trip) {
             fontWeight: FontWeight.bold,
           ),
         ),
+      ),
       ),
 
         ListView.builder(
