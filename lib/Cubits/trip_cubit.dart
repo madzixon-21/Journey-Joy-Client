@@ -26,7 +26,7 @@ class TripsCubit extends Cubit<TripsState>{
               'Content-Type': 'application/json',
             },
           );
-          if (response.statusCode == 200) {
+          if (response. statusCode == 200) {
             if(response.body.isNotEmpty){
               final List<Trip> tripsList = (json.decode(response.body) as List)
                   .map((tripJson) => Trip.fromJson(tripJson))
