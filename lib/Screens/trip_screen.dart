@@ -8,10 +8,12 @@
 /// If the trip has a planned route, the screen displays the attractions in the right order, separating
 /// them into different days.
 
+import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Classes/trip.dart';
 import 'package:journey_joy_client/Dialogs/create_route_dialog.dart';
+import 'package:journey_joy_client/Screens/route_list.dart';
 import 'package:journey_joy_client/Tiles/RouteTile.dart';
 import 'package:journey_joy_client/main.dart';
 import 'package:journey_joy_client/Tiles/AddedAttractionTile.dart';
@@ -36,12 +38,15 @@ class TripScreenState extends State<TripScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<TripsCubit>().fetch(widget.token);
     return BlocBuilder<TripsCubit, TripsState>(
       builder: (context, state) {
         if (state is TripsData) {
           final trip = state.trips.firstWhere((t) => t.id == widget.tripId);
           if (trip.route.attractionsInOrder.isNotEmpty) isRoute = true;
-          if(trip.attractions.length >= 3 && trip.attractions.any((attraction) => attraction.isStartPoint)) enoughAttractions = true;
+          if (trip.attractions.length >= 3 &&
+              trip.attractions.any((attraction) => attraction.isStartPoint))
+            enoughAttractions = true;
           return buildTrip(trip, context);
         } else if (state is TripsLoading) {
           return Scaffold(
@@ -162,7 +167,6 @@ class TripScreenState extends State<TripScreen> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 16),
               isRoute ? buildRouteList(trip) : buildAttractionsList(trip),
               const SizedBox(height: 20),
@@ -170,10 +174,9 @@ class TripScreenState extends State<TripScreen> {
           ),
         ),
       ),
-
-       floatingActionButton: Builder(
-          builder: (context) {
-            return FloatingActionButton(
+      floatingActionButton: Builder(
+        builder: (context) {
+          return FloatingActionButton(
               heroTag: UniqueKey(),
               backgroundColor: const Color(0xFF9DC183),
               child: const Icon(
@@ -189,104 +192,105 @@ class TripScreenState extends State<TripScreen> {
     );
   }
 
-Widget buildAttractionsList(Trip trip) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      
-      Padding(
-        padding: const EdgeInsets.only(left: 12.0),
-        child: Text(
-          "Attractions:",
-          style: TextStyle(
-            color: Colors.grey.shade900,
-            fontFamily: 'Lohit Tamil',
-            fontSize: 15,
-            letterSpacing: 2,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-
-      ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: trip.attractions.length,
-        itemBuilder: (context, index) {
-          return AddedAttractionTile(
-            attraction: trip.attractions[index],
-            tripId: trip.id,
-            token: widget.token,
-          );
-        },
-      ),
-
-      Visibility(
-        visible: !enoughAttractions,
-        child: Center(
-          child:Text(
-            "Add attractions to your trip!",
+  Widget buildAttractionsList(Trip trip) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Text(
+            "Attractions:",
             style: TextStyle(
               color: Colors.grey.shade900,
               fontFamily: 'Lohit Tamil',
               fontSize: 15,
               letterSpacing: 2,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
-      ),
-
-      Visibility(
-        visible: enoughAttractions,
-        child: Center(
-          child: ElevatedButton(
-          onPressed: () {
-            bool hasStartPoint = trip.attractions.any((attraction) => attraction.isStartPoint);
-
-            if (hasStartPoint) {
-              showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => CreateRouteDialog(token: widget.token, tripId: widget.tripId,))
-              .then((result){
-                if (result == 'routeCreated') {
-                  context.read<TripsCubit>().fetch(widget.token);
-                  setState(() {
-                    isRoute = true;
-                  });
-                }});
-            } else {
-              showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => const ErrorDialog(prop: "Make sure to add your hotel accomodation and set it as a starting point of your trip."));
-              } 
-            },
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-            child: Text('Find route',
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: trip.attractions.length,
+          itemBuilder: (context, index) {
+            return AddedAttractionTile(
+              attraction: trip.attractions[index],
+              tripId: trip.id,
+              token: widget.token,
+            );
+          },
+        ),
+        Visibility(
+          visible: !enoughAttractions,
+          child: Center(
+            child: Text(
+              "Add attractions to your trip!",
               style: TextStyle(
                 color: Colors.grey.shade900,
                 fontFamily: 'Lohit Tamil',
+                fontSize: 15,
                 letterSpacing: 2,
               ),
             ),
+          ),
         ),
-      ),
-      ) 
-    ],
-  );
-}
+        Visibility(
+          visible: enoughAttractions,
+          child: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                bool hasStartPoint = trip.attractions
+                    .any((attraction) => attraction.isStartPoint);
+
+                if (hasStartPoint) {
+                  showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => CreateRouteDialog(
+                            token: widget.token,
+                            tripId: widget.tripId,
+                          )).then((result) {
+                    if (result == 'routeCreated') {
+                      context.read<TripsCubit>().fetch(widget.token);
+                      setState(() {
+                        isRoute = true;
+                      });
+                      print(trip.attractionsNotOnRoute.toString());
+                    }
+                  });
+                } else {
+                  showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => const ErrorDialog(
+                          prop:
+                              "Make sure to add your hotel accomodation and set it as a starting point of your trip."));
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              child: Text(
+                'Find route',
+                style: TextStyle(
+                  color: Colors.grey.shade900,
+                  fontFamily: 'Lohit Tamil',
+                  letterSpacing: 2,
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
 
   Widget buildRouteList(Trip trip) {
-    AttractionToAdd startPoint = trip.attractions.firstWhere((attraction) => attraction.isStartPoint);
-    bool notOnRoute = false;
-    if( trip.attractionsNotOnRoute.isNotEmpty)
-    {
-      notOnRoute = true;
-    }
+    AttractionToAdd startPoint =
+        trip.attractions.firstWhere((attraction) => attraction.isStartPoint);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -303,71 +307,18 @@ Widget buildAttractionsList(Trip trip) {
             ),
           ),
         ),
-
-        RouteTile(
-          day: 0, 
-          attraction: startPoint, 
-          tripId: widget.tripId, 
-          token: widget.token,
-          showHours: true
+        RouteTile(day: 0, attraction: startPoint, showHours: true),
+        const SizedBox(
+          height: 30,
         ),
 
-        const SizedBox(height: 30,),
-
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: trip.route.attractionsInOrder.length,
-          itemBuilder: (context, dayIndex) {
-            if (trip.route.attractionsInOrder[dayIndex].isNotEmpty) {
-              int weekDay = (trip.route.startDay + dayIndex - 1) % 7 + 1;
-              return DayTile(
-                  weekDay: weekDay,
-                  attractions: trip.attractions,
-                  attractionIds: trip.route.attractionsInOrder[dayIndex],
-                  dayNumber: dayIndex + 1,
-                  trip: trip,
-                  token: widget.token);
-            } else {
-              return null;
-            }
-          },
-        ),
-
-      Visibility(
-        visible: notOnRoute,
-        child: Padding(
-        padding: const EdgeInsets.only(left: 12.0),
-        child: Text(
-          "Attractions that didn't fit the route:",
-          style: TextStyle(
-            color: Colors.grey.shade900,
-            fontFamily: 'Lohit Tamil',
-            fontSize: 15,
-            letterSpacing: 2,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      ),
-
-        ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: trip.attractionsNotOnRoute.length,
-        itemBuilder: (context, index) {
-          return RouteTile(
-            day: 0,
-            attraction: trip.attractions.firstWhere(
-              (attraction) => attraction.tripAdvisorLocationId == trip.attractionsNotOnRoute[index],
-            ),
-            tripId: trip.id,
-            token: widget.token,
-            showHours: true,
-          );
-        },
-      ),
-
+        // here moving list
+        SizedBox(
+            height: 350,
+            child: RouteList(
+              trip: trip,
+              token: widget.token,
+            )),
         Center(
           child: ElevatedButton(
             onPressed: () {

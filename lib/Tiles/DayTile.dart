@@ -26,113 +26,109 @@ class DayTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DragTarget<AttractionToAdd>(
-      onWillAccept: (data) {
-        return true; 
-      },
-      onAccept: (data) {
-        AttractionToAdd droppedAttraction = data;
-        int targetDayIndex = dayNumber - 1;
-  
-        int droppedDayIndex = -1;
-        for (int i = 0; i < trip.route.attractionsInOrder.length; i++) {
-          if (trip.route.attractionsInOrder[i].contains(droppedAttraction.tripAdvisorLocationId)) {
-            droppedDayIndex = i;
-            break;
-          }
+    return DragTarget<AttractionToAdd>(onWillAccept: (data) {
+      return true;
+    }, onAccept: (data) {
+      AttractionToAdd droppedAttraction = data;
+      int targetDayIndex = dayNumber - 1;
+
+      int droppedDayIndex = -1;
+      for (int i = 0; i < trip.route.attractionsInOrder.length; i++) {
+        if (trip.route.attractionsInOrder[i]
+            .contains(droppedAttraction.tripAdvisorLocationId)) {
+          droppedDayIndex = i;
+          break;
         }
+      }
 
-        if (droppedDayIndex != -1) {
-          trip.route.attractionsInOrder[droppedDayIndex].removeWhere(
-              (attractionId) => attractionId == droppedAttraction.tripAdvisorLocationId);
-        }
+      if (droppedDayIndex != -1) {
+        trip.route.attractionsInOrder[droppedDayIndex].removeWhere(
+            (attractionId) =>
+                attractionId == droppedAttraction.tripAdvisorLocationId);
+      }
 
-        trip.route.attractionsInOrder[targetDayIndex].add(droppedAttraction.tripAdvisorLocationId);
+      trip.route.attractionsInOrder[targetDayIndex]
+          .add(droppedAttraction.tripAdvisorLocationId);
 
-        EditRouteAction().edit(trip.route.attractionsInOrder, trip.id, token).then((http.Response? response){
-          if(response != null){
-            if(response.statusCode != 200){
+      EditRouteAction()
+          .edit(trip.route.attractionsInOrder, trip.id, token)
+          .then((http.Response? response) {
+        if (response != null) {
+          if (response.statusCode != 200) {
             showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => ErrorDialog(prop: response.body));
-            }
+                context: context,
+                builder: (BuildContext context) =>
+                    ErrorDialog(prop: response.body));
           }
-        });
-      },
-      builder: (context, candidateData, rejectedData) {
-        return Flexible(
+        }
+      });
+    }, builder: (context, candidateData, rejectedData) {
+      return Flexible(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              color: Colors.grey.shade900,
-              height: 1, 
-              width: 50,
+            Row(
+              children: [
+                Container(
+                  color: Colors.grey.shade900,
+                  height: 1,
+                  width: 50,
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  "Day $dayNumber",
+                  style: TextStyle(
+                    color: Colors.grey.shade900,
+                    fontSize: 16,
+                    fontFamily: 'Lohit Tamil',
+                    fontWeight: FontWeight.bold,
+                    height: 1.2,
+                    letterSpacing: 2,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  color: Colors.grey.shade900,
+                  height: 1,
+                  width: 250,
+                ),
+              ],
             ),
-
-            const SizedBox(width: 10),
-
-            Text(
-              "Day $dayNumber",
-              style: TextStyle(
-                color: Colors.grey.shade900,
-                fontSize: 16,
-                fontFamily: 'Lohit Tamil',
-                fontWeight: FontWeight.bold,
-                height: 1.2,
-                letterSpacing: 2,
+            for (var attractionId in attractionIds)
+              Draggable<AttractionToAdd>(
+                data: attractions.firstWhere(
+                  (attraction) =>
+                      attraction.tripAdvisorLocationId == attractionId,
+                ),
+                feedback: Opacity(
+                  opacity: 0.7,
+                  child: RouteTile(
+                    day: weekDay,
+                    attraction: attractions.firstWhere(
+                      (attraction) =>
+                          attraction.tripAdvisorLocationId == attractionId,
+                    ),
+                    // tripId: trip.id,
+                    // token: token,
+                    showHours: false,
+                  ),
+                ),
+                child: RouteTile(
+                  day: weekDay,
+                  attraction: attractions.firstWhere(
+                    (attraction) =>
+                        attraction.tripAdvisorLocationId == attractionId,
+                  ),
+                  // tripId: trip.id,
+                  // token: token,
+                  showHours: false,
+                ),
               ),
-            ),
-
-            const SizedBox(width: 10),
-
-            Container(
-              color: Colors.grey.shade900,
-              height: 1, 
-              width: 250,
-            ),
+            const SizedBox(height: 20),
           ],
         ),
-        for (var attractionId in attractionIds)
-          Draggable<AttractionToAdd>(
-            data: attractions.firstWhere(
-              (attraction) => attraction.tripAdvisorLocationId == attractionId,
-            ),
-            feedback: Opacity(
-              opacity: 0.7, 
-              child: RouteTile(
-                day: weekDay,
-                attraction: attractions.firstWhere(
-                  (attraction) => attraction.tripAdvisorLocationId == attractionId,
-                ),
-                tripId: trip.id, 
-                token: token,
-                showHours: false,
-              ),),
-            child: RouteTile(
-              day: weekDay,
-              attraction: attractions.firstWhere(
-                (attraction) => attraction.tripAdvisorLocationId == attractionId,
-              ),
-              tripId: trip.id, 
-              token: token,
-              showHours: false,
-            ),
-          ),
-        
-
-        const SizedBox(height: 20),
-      ],
-        
-    ),
-        );
-    
+      );
+    });
   }
-    );
 }
-}
-
