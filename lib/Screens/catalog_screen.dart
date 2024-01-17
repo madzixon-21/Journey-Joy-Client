@@ -193,10 +193,8 @@ class CatalogScreenState extends State<CatalogScreen> {
                           child: CatalogTile(trip: trip),
                         ),
                       )
-                    );
-                      
-                    },
-         
+                    ); 
+                  },
                 );
               case TripsError:
                 final errorMessage = (currentState as TripsError).message;
@@ -208,34 +206,34 @@ class CatalogScreenState extends State<CatalogScreen> {
                 );
               default:
                 return Container();
-            }
-          },
-        ),
+              }
+            },
+          ),
         ],
       ),
 
-    floatingActionButton: Builder(
-      builder: (context) {
-        return FloatingActionButton(
-          backgroundColor: const Color(0xFF9DC183),
-          child: const Icon(
-            Icons.add,
-            color: Colors.black45,
-            size: 32,
-          ),
-          onPressed: () {
-            showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => NewTripDialog(token: widget.token),
-            ).then((result){
-              if (result == 'tripCreated') {
-                context.read<TripsCubit>().fetch(widget.token);
-              }
-            });
-          }
-        );
-      },
-    ),
+      floatingActionButton: Builder(
+        builder: (context) {
+          return FloatingActionButton(
+            backgroundColor: const Color(0xFF9DC183),
+            child: const Icon(
+              Icons.add,
+              color: Colors.black45,
+              size: 32,
+            ),
+            onPressed: () {
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => NewTripDialog(token: widget.token),
+              ).then((result){
+                if (result == 'tripCreated') {
+                  context.read<TripsCubit>().fetch(widget.token);
+                }
+              });
+            }
+          );
+        },
+      ),
     );
   }
 }

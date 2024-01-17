@@ -263,11 +263,9 @@ class CheckboxHoursState extends State<CheckboxHours> {
                   controllerOpen: _sundayControllerOpen,
                   controllerClose: _sundayControllerClose,
                 ),
-
               ],
             ),
           ),
-
         ],
     );
   }

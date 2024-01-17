@@ -1,8 +1,7 @@
 /// # Sign in dialog
-/// ## Displays when a new user want to register
+/// ## Displays when a new user wants to register
 /// 
-/// Contains text fields to collect the necessary data to create a new acoount. The user adds a nickname, an email address,
-///  a password and confirms the password.
+/// Screen used to display Sign in form.
 
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Screens/SignInForm/signin_form.dart';
@@ -18,7 +17,7 @@ class SigninDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: SignInForm(),
+      child: const SignInForm(),
     );
   }
 }

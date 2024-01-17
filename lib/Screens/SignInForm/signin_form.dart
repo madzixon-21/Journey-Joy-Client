@@ -1,6 +1,8 @@
 /// # SignIngFomr
 /// ## Form screen used for sign in.
 ///
+///Contains text fields to collect the necessary data to create a new acoount. The user adds a nickname, an email address,
+///  a password and confirms the password.
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';

@@ -6,7 +6,6 @@
 /// The elevated button sends the http request.
 
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/Functions/edit_trip.dart';
 import 'package:image_picker/image_picker.dart';
@@ -92,9 +91,7 @@ class EditTripDialogState extends State<EditTripDialog> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 TextFormField(
                   style: TextStyle(
                     color: Colors.grey.shade900,
@@ -127,9 +124,7 @@ class EditTripDialogState extends State<EditTripDialog> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 TextFormField(
                   key: const Key('tripDescriptionTextField'),
                   maxLines: 3,
@@ -163,9 +158,7 @@ class EditTripDialogState extends State<EditTripDialog> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -208,9 +201,7 @@ class EditTripDialogState extends State<EditTripDialog> {
                     Center(child: _buildSelectedImage()),
                   ],
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {

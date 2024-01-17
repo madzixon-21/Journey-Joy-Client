@@ -1,3 +1,8 @@
+/// # Text Form Tile
+/// ## Used in Add Form 
+/// 
+/// Tile used in the Add Form to collect string data (such as name and description)
+
 import 'package:flutter/material.dart';
 
 class TextFormTile extends StatelessWidget {

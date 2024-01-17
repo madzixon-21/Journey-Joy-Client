@@ -1,7 +1,8 @@
-/// # Error Dialog
-/// ## Displayed after validation errors and in case of http response with status code 400 
+/// # Time Dialog
+/// ## Displayed in the Add Attraction Form
 /// 
-/// Displays the text "Sometginf went wrong!" and the error message.
+/// Displays the text "The opening time should be less than the closing time!" when the user tries to add an 
+/// attraction that closes before it opens.
 
 import 'package:flutter/material.dart';
 
@@ -27,14 +28,14 @@ class TimeDialog extends StatelessWidget {
             const SizedBox(height: 30),
 
             Center(
-            child: Text('The opening time should be less than the closing time!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.grey.shade900,
-                fontFamily: 'Lohit Tamil',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2,
+              child: Text('The opening time should be less than the closing time!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.grey.shade900,
+                  fontFamily: 'Lohit Tamil',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
                 ),
               ),
             ),

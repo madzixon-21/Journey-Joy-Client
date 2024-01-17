@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
         
                 child: Column(
                   children: [
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 75),
         
                     Container(
                       height:45,
@@ -166,7 +166,6 @@ class LoginScreen extends StatelessWidget {
                             _emailController.clear();
                             _passwordController.clear();
                           }
-                          
                         });
                       },
         
@@ -220,7 +219,7 @@ class LoginScreen extends StatelessWidget {
                             color: Colors.grey.shade900, 
                             height: 1, 
                             width: 100,
-                          ),
+                        ),
                       ],
                     ),
         
@@ -250,49 +249,6 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                      
-                    const SizedBox(height: 20,),
-        
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: ElevatedButton(
-                        onPressed: () {}, 
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:  const Color(0xFF9DC183),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0), 
-                          ),
-                          minimumSize: const Size(305, 47),
-                        ),
-                        child:  Row(
-                          children: [
-                            const SizedBox(width: 15),
-                            Container(
-                              width: 20,
-                              height: 20,
-                              decoration:const BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage('https://cdn-icons-png.flaticon.com/128/104/104093.png'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 30),
-                            Text(
-                              'Sign in with Google',
-                              style: TextStyle(
-                                color: Colors.grey.shade900,
-                                fontFamily: 'Lohit Tamil',
-                                fontSize: 15,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 25,),
                   ],
                 ),
               ),  

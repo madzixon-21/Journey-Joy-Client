@@ -1,9 +1,13 @@
+/// # Attraction Tile 
+/// ## Displays the attraction found in Trip Advisor after a search 
+/// 
+/// Shows the attraction's name and address. Has a plus button that allows the user to add the attraction directly to the trip.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Dialogs/add_attraction_dialog.dart';
 import 'package:journey_joy_client/Cubits/trip_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class AttractionTile extends StatelessWidget {
   const AttractionTile({
@@ -38,35 +42,34 @@ class AttractionTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(attraction.name,
-                      style: TextStyle(
-                        color: Colors.grey.shade900,
-                        fontSize: 15,
-                        fontFamily: 'Lohit Tamil',
-                        fontWeight: FontWeight.w400,
-                        height: 1.2,
-                        letterSpacing: 2,
-                      ),
+                    style: TextStyle(
+                      color: Colors.grey.shade900,
+                      fontSize: 15,
+                      fontFamily: 'Lohit Tamil',
+                      fontWeight: FontWeight.w400,
+                      height: 1.2,
+                      letterSpacing: 2,
                     ),
+                  ),
                   
                   const SizedBox(height: 10,),
                   
                   Text(attraction.address.toString(),
-                      style: TextStyle(
-                        color: Colors.grey.shade900,
-                        fontSize: 13,
-                        fontFamily: 'Lohit Tamil',
-                        fontWeight: FontWeight.w400,
-                        height: 1,
-                        letterSpacing: 1,
-                      ),
+                    style: TextStyle(
+                      color: Colors.grey.shade900,
+                      fontSize: 13,
+                      fontFamily: 'Lohit Tamil',
+                      fontWeight: FontWeight.w400,
+                      height: 1,
+                      letterSpacing: 1,
                     ),
-
-                  RatingWidget(rating: attraction.rating),
+                  ),
                 ],
               ),
             ),
             
             PlusButton(attraction: attraction, tripId: tripId, token: token),
+
             const SizedBox(width: 15),
           ],
         ),
@@ -119,14 +122,10 @@ class PlusButton extends StatelessWidget {
               Icons.add_rounded,
               color: Colors.grey.shade900,
               size: 16,
-              
             ),
           ],
         ),
-          
       ),
-      
     );
-
   }
 }

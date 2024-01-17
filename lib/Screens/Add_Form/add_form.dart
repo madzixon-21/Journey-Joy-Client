@@ -83,16 +83,11 @@ class AddFormState extends State<AddForm> {
       GlobalKey<CheckboxHoursState>();
 
   final _formKey = GlobalKey<FormState>();
-  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     _timeController.text = '0';
-    
-    return Stack(
-      children: [
-
-      Form(
+    return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,12 +129,10 @@ class AddFormState extends State<AddForm> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 5.0),
+                      vertical: 8.0, horizontal: 5.0),
                     child: Row(
                       children: [
-                        const SizedBox(
-                          width: 8,
-                        ),
+                        const SizedBox(width: 8),
                         SizedBox(
                           width: 120,
                           child: Text(
@@ -205,9 +198,7 @@ class AddFormState extends State<AddForm> {
                   ),
                 ],
               )),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           SizedBox(
             width: 300,
             child: Text(
@@ -323,9 +314,6 @@ class AddFormState extends State<AddForm> {
                   if (_ifPictureAdded == 0) {
                     imageBytes = List.empty();
                   }
-                  setState(() {
-                    isLoading = true;
-                  });
                   AddAttractionAction()
                       .add(
                     _attractionNameController.text,
@@ -342,9 +330,6 @@ class AddFormState extends State<AddForm> {
                       .then((bool successful) {
                     if (successful) {
                       context.read<TripsCubit>().fetch(widget.token);
-                      setState(() {
-                        isLoading = false;
-                      });
                       Navigator.pop(context);
                     } else {
                       showDialog<String>(
@@ -375,24 +360,6 @@ class AddFormState extends State<AddForm> {
           ),
         ],
       ),
-    ),
-    
-          
-      Visibility(
-        visible: isLoading,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: Colors.transparent, 
-          child: const Center(
-            child: CircularProgressIndicator(),
-          ),
-        ),
-        ),
-      
-
-      ],
     );
-
   }
 }

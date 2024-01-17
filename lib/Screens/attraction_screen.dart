@@ -3,7 +3,7 @@
 ///
 /// Screen consisting of a Scaffold with an appar that contains a search bar where the user can search 
 /// attractions using key words. The body displays a list of attractions provided by tripAdvisor that match 
-/// the search key word. Each attraction has a plus button that allows the user to add the attraction to the trip.
+/// the searched key word. Each attraction has a plus button that allows the user to add the attraction to the trip.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -92,7 +92,7 @@ class AttractionScreenState extends State<AttractionScreen> {
                   child: CircularProgressIndicator(),
                 );
             }
-        print(widget.token);
+
             switch (currentState.runtimeType) {
               case AttractionsLoading():
                 return const Center(
@@ -138,24 +138,23 @@ class AttractionScreenState extends State<AttractionScreen> {
               default:
                 return Container();
             }
-            
           },
         ),
 
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        floatingActionButton: FloatingActionButton(
-              heroTag: UniqueKey(),
-              backgroundColor: const Color.fromARGB(255, 224, 245, 210),
-              child: const Icon(
-                Icons.add_location_alt_outlined,
-                color: Colors.black45,
-                size: 32,
-              ),
-              onPressed: () {
-                context.go('/user/${widget.token}/trip/${widget.tripId}/newAttraction');
-              },
+          floatingActionButton: FloatingActionButton(
+            heroTag: UniqueKey(),
+            backgroundColor: const Color.fromARGB(255, 224, 245, 210),
+            child: const Icon(
+              Icons.add_location_alt_outlined,
+              color: Colors.black45,
+              size: 32,
             ),
-      ),
+            onPressed: () {
+              context.go('/user/${widget.token}/trip/${widget.tripId}/newAttraction');
+            },
+          ),
+        ),
       );
   }
 }

@@ -2,13 +2,13 @@
 /// ## Displays the details of the trip with the corresponding tripId
 ///
 /// The screen displays the trip picture, along with it's name and description in the top part.
-/// Below it shows the added attractions in two different ways.
+/// Underneath, it shows the added attractions in two different ways.
 /// When the trip doesn't have a calculated route, the screen shows a list of attractions with the "Options"
 /// button which allows the user to edit or delete the attraction from the trip.
 /// If the trip has a planned route, the screen displays the attractions in the right order, separating
-/// them into different days.
+/// them into different days. It also displays the stsrting point at the top part of the screen and the attractions 
+/// that didn't fit the route at the bottom.
 
-import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Classes/trip.dart';
@@ -20,7 +20,6 @@ import 'package:journey_joy_client/Tiles/AddedAttractionTile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_joy_client/Cubits/trip_cubit.dart';
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
-import 'package:journey_joy_client/Tiles/DayTile.dart';
 import 'package:journey_joy_client/Classes/Functions/remove_route.dart';
 import 'package:http/http.dart' as http;
 
@@ -44,9 +43,7 @@ class TripScreenState extends State<TripScreen> {
         if (state is TripsData) {
           final trip = state.trips.firstWhere((t) => t.id == widget.tripId);
           if (trip.route.attractionsInOrder.isNotEmpty) isRoute = true;
-          if (trip.attractions.length >= 3 &&
-              trip.attractions.any((attraction) => attraction.isStartPoint))
-            enoughAttractions = true;
+          if (trip.attractions.length >= 3) enoughAttractions = true;
           return buildTrip(trip, context);
         } else if (state is TripsLoading) {
           return Scaffold(
@@ -105,14 +102,18 @@ class TripScreenState extends State<TripScreen> {
           ),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/trip_background.png'),
-            fit: BoxFit.cover,
+      body: Stack(
+        children:[
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/trip_background.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
-        child: SingleChildScrollView(
+        
+          SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -173,6 +174,8 @@ class TripScreenState extends State<TripScreen> {
             ],
           ),
         ),
+
+        ],
       ),
       floatingActionButton: Builder(
         builder: (context) {

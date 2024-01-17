@@ -1,3 +1,8 @@
+/// # Created Account Dialog
+/// ## Dialog displayed after a successful registration of a new user.
+/// 
+/// The message in the dialog uses the new user's nickname to greet them  
+/// and informs them that the registration has been succesfull.
 
 import 'package:flutter/material.dart';
 
@@ -38,17 +43,17 @@ class CreatedAccountDialog extends StatelessWidget {
             const SizedBox(height: 20),
 
             Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text("Your registration is now complete.",
-                style: TextStyle(
-                  color: Colors.grey.shade900,
-                  fontFamily: 'Lohit Tamil',
-                  fontSize: 15,
-                  letterSpacing: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text("Your registration is now complete.",
+                  style: TextStyle(
+                    color: Colors.grey.shade900,
+                    fontFamily: 'Lohit Tamil',
+                    fontSize: 15,
+                    letterSpacing: 2,
                   ),
                 ),
-            ),
+              ),
             ),
 
             const SizedBox(height: 20),

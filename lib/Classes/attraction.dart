@@ -6,8 +6,6 @@
 ///                  Contains all the necessary data for the planning algorithm
 /// Address: address class used in both attraction classes
 
-import 'package:flutter/material.dart';
-
 class Attraction {
   final int locationId;
   final String name;
@@ -170,25 +168,4 @@ class AttractionToAdd {
     };
   }
 
-}
-
-class RatingWidget extends StatelessWidget {
-  final String rating;
-
-  const RatingWidget({super.key, required this.rating});
-
-  @override
-  Widget build(BuildContext context) {
-    final int ratingInt = int.tryParse(rating) ?? 0;
-    return Row(
-      children: List.generate(
-        ratingInt,
-        (index) => Icon(
-          Icons.star,
-          color: Colors.grey.shade900,
-          size: 12,
-        ),
-      ),
-    );
-  }
 }

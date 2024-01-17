@@ -9,7 +9,6 @@
 /// By default, "Different hours every day" is checked and the text fields are filled with the atrraction prices.
 
 import 'package:flutter/material.dart';
-import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
 import 'package:journey_joy_client/Tiles/NumberFormTile.dart';
 
 class EditCheckboxPrices extends StatefulWidget {

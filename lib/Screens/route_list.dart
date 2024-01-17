@@ -1,9 +1,10 @@
+/// # Route List
+/// ## Displays the planned route as a drag and drop list divided into seperate days.
+
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:journey_joy_client/Classes/Functions/edit_route_order.dart';
 import 'package:journey_joy_client/Classes/trip.dart';
-import 'package:journey_joy_client/Cubits/trip_cubit.dart';
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
 import 'package:journey_joy_client/Tiles/RouteTile.dart';
 import 'package:http/http.dart' as http;

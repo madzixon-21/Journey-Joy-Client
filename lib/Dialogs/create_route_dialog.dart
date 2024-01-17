@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/Functions/get_route.dart';
 import 'package:journey_joy_client/Dialogs/error_dialog.dart';
-import 'package:journey_joy_client/Tiles/NumberFormTile.dart';
 
 class CreateRouteDialog extends StatefulWidget {
   final String token;
@@ -47,7 +46,7 @@ class CreateRouteDialogState extends State<CreateRouteDialog> {
       child: Form(
         key: _formKey,
         child: Container(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(20.0),
           height: 475,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -179,8 +178,6 @@ class CreateRouteDialogState extends State<CreateRouteDialog> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         int startDay = convertDay(dropdownValue);
-                        print("token:${widget.token}");
-                        print("token:${widget.tripId}");
                         CreateRoute()
                             .create(int.parse(_numDaysController.text), startDay,
                                 widget.tripId, widget.token)

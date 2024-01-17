@@ -1,3 +1,8 @@
+/// # Route Tile
+/// ## Used in Trip Screen to displayed the attractions in a planned route.
+/// 
+/// Displays the atraction's photo name and address.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'dart:convert';
@@ -83,7 +88,7 @@ class RouteTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Visibility(
-                      visible: !showHours,
+                      visible: showHours,
                       child: Text(
                         "Enter attraction between: \n $visitingHours",
                         style: TextStyle(

@@ -3,7 +3,7 @@
 ///
 /// Collects necessary information about the attraction that is needed for the planning algorithm.
 /// The name and description of the atrraction are already filled and the user adds a description and the time needed for visiting.
-/// Contains an Elevated Button that sends thehttp request.
+/// Contains an Elevated Button that sends the http request.
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +38,7 @@ class AddAttractionDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Container(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(20.0),
         height: 600,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),

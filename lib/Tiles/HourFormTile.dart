@@ -1,3 +1,8 @@
+/// # Hour Form Tile
+/// ## Used in the Add Attraction Form
+/// 
+/// Allows the user to set the opening and closing time of the attraction
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Dialogs/timeDialog.dart';
 

@@ -9,7 +9,6 @@
 /// By default, "Different hours every day" is checked and the text fields are filled with the attraction openin hours.
 
 import 'package:flutter/material.dart';
-import 'package:journey_joy_client/Tiles/FormTileSmall.dart';
 import 'package:journey_joy_client/Tiles/HourFormTile.dart';
 
 class EditCheckboxHours extends StatefulWidget {

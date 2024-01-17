@@ -1,8 +1,5 @@
 /// # Form
-/// ## Form screen used for collecting data about a personalized attraction.
-///
-/// Contains text fields for collecting attraction details and location data.
-/// Uses checkBoxPrices and chackBoxHours for collecting information about opening hours and prices.
+/// ## Form screen used for displaying the Add Form
 
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Screens/Add_Form/add_form.dart';

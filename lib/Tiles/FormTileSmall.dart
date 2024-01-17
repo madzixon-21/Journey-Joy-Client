@@ -1,3 +1,5 @@
+/// # Form Tile Small
+/// ## Used to collect data for the attraction form.
 import 'package:flutter/material.dart';
 
 class FormTileSmall extends StatelessWidget {

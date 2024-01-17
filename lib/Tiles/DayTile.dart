@@ -1,3 +1,8 @@
+/// # Day Tile
+/// ## Tile used for each day in Route List
+/// 
+/// This is where the drag and drop logic is implemented.
+
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/attraction.dart';
 import 'package:journey_joy_client/Tiles/RouteTile.dart';
@@ -109,8 +114,6 @@ class DayTile extends StatelessWidget {
                       (attraction) =>
                           attraction.tripAdvisorLocationId == attractionId,
                     ),
-                    // tripId: trip.id,
-                    // token: token,
                     showHours: false,
                   ),
                 ),
@@ -120,8 +123,6 @@ class DayTile extends StatelessWidget {
                     (attraction) =>
                         attraction.tripAdvisorLocationId == attractionId,
                   ),
-                  // tripId: trip.id,
-                  // token: token,
                   showHours: false,
                 ),
               ),

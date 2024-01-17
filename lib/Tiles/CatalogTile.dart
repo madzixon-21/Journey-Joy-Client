@@ -1,5 +1,9 @@
-import 'dart:typed_data';
+/// # Catalog Tile
+/// ## Used in the Catalog Screen
+/// 
+/// Displays a trip showing it's photo and name.
 
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Classes/trip.dart';
 
@@ -21,23 +25,23 @@ class CatalogTile extends StatelessWidget {
         child: Column(
           children: [
             ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(10.0)),
-            child: Container(
-            width: 170,
-            height: 150,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: trip.picture.isNotEmpty
-                ? Image.memory(
-                    Uint8List.fromList(trip.picture),
-                    fit: BoxFit.cover,
-                  )
-                : Image.asset(
-                    'assets/default_pic.png',
-                    fit: BoxFit.cover,
-                  ),
-          ),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(10.0)),
+              child: Container(
+                width: 170,
+                height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: trip.picture.isNotEmpty
+                    ? Image.memory(
+                        Uint8List.fromList(trip.picture),
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        'assets/default_pic.png',
+                        fit: BoxFit.cover,
+                      ),
+              ),
             ),
             const SizedBox(height: 25),
             Text(

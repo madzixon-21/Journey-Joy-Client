@@ -1,3 +1,8 @@
+/// # Number Form Tile
+/// ## Used in Add Form 
+/// 
+/// Tile used in the Add Form to collect numeric data (such as time needed in the attraction)
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

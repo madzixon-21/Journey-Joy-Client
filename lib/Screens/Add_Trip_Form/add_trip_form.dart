@@ -1,6 +1,8 @@
 /// # AddTripForm
-/// ## Form screen used for collecting data about a personalized trip.
+/// ## Form screen used for creating a new trip.
 ///
+/// Collects information about the attraction's name and description and let's the user choose the 
+/// attraction photo.
 
 import 'dart:typed_data';
 
@@ -62,8 +64,8 @@ class AddTripFormState extends State<AddTripForm> {
     return Form(
       key: _formKey,
       child: Container(
-        padding: const EdgeInsets.all(8.0),
-        height: 450,
+        padding: const EdgeInsets.all(20.0),
+        height: 440,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           image: const DecorationImage(
@@ -88,9 +90,7 @@ class AddTripFormState extends State<AddTripForm> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
               TextFormField(
                 style: TextStyle(
                   color: Colors.grey.shade900,
@@ -129,9 +129,7 @@ class AddTripFormState extends State<AddTripForm> {
                   return null;
                 },
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               TextFormField(
                 key: const Key('tripDescriptionTextField'),
                 maxLines: 3,
@@ -171,9 +169,7 @@ class AddTripFormState extends State<AddTripForm> {
                   return null;
                 },
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -216,9 +212,7 @@ class AddTripFormState extends State<AddTripForm> {
                   Center(child: _buildSelectedImage()),
                 ],
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               Center(
                 child: ElevatedButton(
                   onPressed: () {

@@ -1,7 +1,7 @@
 /// # Error Dialog
 /// ## Displayed after validation errors and in case of http response with status code 400 
 /// 
-/// Displays the text "Sometginf went wrong!" and the error message.
+/// Displays the text "Something went wrong!" and the error message.
 
 import 'package:flutter/material.dart';
 
@@ -28,31 +28,31 @@ class ErrorDialog extends StatelessWidget {
             const SizedBox(height: 30),
 
             Center(
-            child: Text('Something went wrong!',
-              style: TextStyle(
-                color: Colors.grey.shade900,
-                fontFamily: 'Lohit Tamil',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2,
+              child: Text('Something went wrong!',
+                style: TextStyle(
+                  color: Colors.grey.shade900,
+                  fontFamily: 'Lohit Tamil',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                  ),
                 ),
-              ),
             ),
 
             const SizedBox(height: 20),
 
             Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(prop,
-                style: TextStyle(
-                  color: Colors.grey.shade900,
-                  fontFamily: 'Lohit Tamil',
-                  fontSize: 15,
-                  letterSpacing: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(prop,
+                  style: TextStyle(
+                    color: Colors.grey.shade900,
+                    fontFamily: 'Lohit Tamil',
+                    fontSize: 15,
+                    letterSpacing: 2,
                   ),
                 ),
-            ),
+              ),
             ),
 
             const SizedBox(height: 20),

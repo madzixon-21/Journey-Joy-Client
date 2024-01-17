@@ -1,8 +1,7 @@
 /// # New Trip Dialog
-/// ## Dialog display when the user wants to create a new trip
+/// ## Dialog displayed when the user wants to create a new trip
 /// 
-/// Allows the user to set the trip's name, description and choose a catalog cover picture.
-/// The elevated button send the http request.
+/// Displays the New Trip Form.
 
 import 'package:flutter/material.dart';
 import 'package:journey_joy_client/Screens/Add_Trip_Form/add_trip_form.dart';
