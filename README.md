@@ -1,16 +1,9 @@
-# journey_joy_client
+# Journey Joy Client
 
-A new Flutter project.
+This Flutter project aims to provide users with the Journey Joy mobile application, available on both iOS and Android platforms. Journey Joy simplifies trip planning by allowing users to create trips, add attractions, and generate comfortable routes considering various factors such as opening hours and location of attractions.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features
+*Trip Creation: Users can create new trips, specifying the name, description, and trip picture.
+*Attraction Addition: Users can add attractions to their trips either by searching the TripAdvisor database or by manually entering personalized attractions.
+*Route Optimization: The app calculates an optimal route for visiting attractions during the days of travel, taking into account factors like opening hours and attraction locations.
+*iOS and Android Compatibility: Journey Joy is designed to work seamlessly on both iOS and Android devices, providing a consistent user experience across platforms.
