@@ -4,14 +4,14 @@ This Flutter project aims to provide users with the Journey Joy mobile applicati
 
 ## Features
 
-- Trip Creation
+- Trip Creation:
 Users can create new trips, specifying the name, description, and trip picture.
 
-- Attraction Addition 
+- Attraction Addition: 
 Users can add attractions to their trips either by searching the TripAdvisor database or by manually entering personalized attractions.
 
-- Route Optimization
+- Route Optimization:
 The app calculates an optimal route for visiting attractions during the days of travel, taking into account factors like opening hours and attraction locations.
 
-- iOS and Android Compatibility
+- iOS and Android Compatibility:
 Journey Joy is designed to work seamlessly on both iOS and Android devices, providing a consistent user experience across platforms.
